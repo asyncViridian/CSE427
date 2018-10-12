@@ -6,6 +6,7 @@ public class LocalSequenceAligner {
 
 	private static final int GAP_PENALTY = -4;
 	private static final char GAP_CHARACTER = '-';
+	private static final int CONSOLE_WIDTH = 60;
 
 	// Returns a linked list representing trace-back of the highest substring score
 	private static LinkedNode align(BLOSUM62Table table, String seq1, String seq2) {
@@ -67,9 +68,12 @@ public class LocalSequenceAligner {
 		return maxScoreFound;
 	}
 
-	private static void printAlignment(LinkedNode node, String name1, String name2, String seq1, String seq2) {
+	private static void printAlignment(BLOSUM62Table table, LinkedNode node, String name1, String name2, String seq1,
+			String seq2) {
 		StringBuilder subseq1 = new StringBuilder();
+		int index1 = node.coords.a;
 		StringBuilder subseq2 = new StringBuilder();
+		int index2 = node.coords.b;
 
 		// Build aligned form of strings in reverse order
 		while (node.prev != null) {
@@ -79,7 +83,8 @@ public class LocalSequenceAligner {
 				subseq1.append(GAP_CHARACTER);
 			} else {
 				// Match in seq1
-				subseq1.append(seq1.charAt(node.coords.a + 1));
+				subseq1.append(seq1.charAt(node.coords.a - 1));
+				index1 = node.coords.a;
 			}
 			// Check seq2
 			if (node.coords.b == node.prev.coords.b) {
@@ -87,7 +92,8 @@ public class LocalSequenceAligner {
 				subseq2.append(GAP_CHARACTER);
 			} else {
 				// Match in seq2
-				subseq2.append(seq2.charAt(node.coords.b));
+				subseq2.append(seq2.charAt(node.coords.b - 1));
+				index2 = node.coords.b;
 			}
 			node = node.prev;
 		}
@@ -95,12 +101,37 @@ public class LocalSequenceAligner {
 		// Reverse stringbuilders
 		subseq1 = subseq1.reverse();
 		subseq2 = subseq2.reverse();
+
+		// Get alignment similarities
+		StringBuilder similar = new StringBuilder();
+		for (int i = 0; i < subseq1.length(); i++) {
+			if (subseq1.charAt(i) == subseq2.charAt(i)) {
+				// Exact match
+				similar.append(subseq1.charAt(i));
+			} else if (table.lookup(subseq1.charAt(i), subseq2.charAt(i)) > 0) {
+				// Positive substitution score
+				similar.append('+');
+			} else {
+				// Nothing we want to mark
+				similar.append(' ');
+			}
+		}
+
+		// Print this stuff to the console!
+		for (int i = 0; i < subseq1.length(); i += CONSOLE_WIDTH) {
+			System.out.printf("%8s:%4d %s\n", name1, index1,
+					subseq1.substring(i, Math.min(i + CONSOLE_WIDTH, subseq1.length())));
+			System.out.printf("%13s %s\n", "", similar.substring(i, Math.min(i + CONSOLE_WIDTH, similar.length())));
+			System.out.printf("%8s:%4d %s\n", name2, index2,
+					subseq2.substring(i, Math.min(i + CONSOLE_WIDTH, subseq2.length())));
+			System.out.println();
+		}
 	}
 
 	public static void main(String[] args) {
 		BLOSUM62Table table = new BLOSUM62Table();
 		LinkedNode result = LocalSequenceAligner.align(table, "KEVLAR", "KNIEVIL");
-		LocalSequenceAligner.printAlignment(result, "name1", "name2", "KEVLAR", "KNIEVIL");
+		LocalSequenceAligner.printAlignment(table, result, "name1", "name2", "KEVLAR", "KNIEVIL");
 		// TODO empirical p-value calculation using sequence permutation
 		// TODO actual main method control with permutation count and seeds
 		// TODO
