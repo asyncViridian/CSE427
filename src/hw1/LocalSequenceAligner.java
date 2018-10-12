@@ -168,12 +168,41 @@ public class LocalSequenceAligner {
 		}
 	}
 
+	private static int performComparisonAnalysis(BLOSUM62Table table, String name1, String name2, String seq1,
+			String seq2, Random random, int numPermutations) {
+		LinkedNode result = LocalSequenceAligner.align(table, seq1, seq2);
+		LocalSequenceAligner.printAlignment(table, result, name1, name2, seq1, seq2);
+		System.out.printf("Total score: " + result.value + "%n");
+		System.out.println();
+		return result.value;
+	}
+
 	public static void main(String[] args) {
+		// Usage message
+		if (args.length % 2 != 0) {
+			System.err.println("Usage: java LocalSequenceAligner [--permutations PPP] [--seed NNN]");
+		}
+
 		BLOSUM62Table table = new BLOSUM62Table();
+		Random random = new Random();
+
+		// Read arguments parameters
+		int numPermutations = 0;
+		if (args.length != 0) {
+			for (int i = 0; i < args.length; i += 2) {
+				if (args[i].equals("--permutations")) {
+					// Set permutation count
+					numPermutations = Integer.valueOf(args[i + 1]);
+				} else if (args[i].equals("--seed")) {
+					// Set random seed
+					random = new Random(Integer.valueOf(args[i + 1]));
+				}
+			}
+		}
+
 		String seq1 = "KEVLAR";
 		String seq2 = "KNIEVIL";
-		LinkedNode result = LocalSequenceAligner.align(table, seq1, seq2);
-		LocalSequenceAligner.printAlignment(table, result, "name1", "name2", seq1, seq2);
+		int score = performComparisonAnalysis(table, "name1", "name2", seq1, seq2, random, numPermutations);
 		// TODO actual main method control with permutation count and seeds
 		// TODO optional empirical p-value calculation using sequence permutation
 	}
