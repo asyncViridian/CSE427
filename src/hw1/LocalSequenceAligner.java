@@ -5,6 +5,7 @@ import java.util.*;
 public class LocalSequenceAligner {
 
 	private static final int GAP_PENALTY = -4;
+	private static final char GAP_CHARACTER = '-';
 
 	// Returns a linked list representing trace-back of the highest substring score
 	private static LinkedNode align(BLOSUM62Table table, String seq1, String seq2) {
@@ -66,9 +67,42 @@ public class LocalSequenceAligner {
 		return maxScoreFound;
 	}
 
+	private static void printAlignment(LinkedNode node, String name1, String name2, String seq1, String seq2) {
+		StringBuilder subseq1 = new StringBuilder();
+		StringBuilder subseq2 = new StringBuilder();
+
+		// Build aligned form of strings in reverse order
+		while (node.prev != null) {
+			// Check seq1
+			if (node.coords.a == node.prev.coords.a) {
+				// Gap in seq1
+				subseq1.append(GAP_CHARACTER);
+			} else {
+				// Match in seq1
+				subseq1.append(seq1.charAt(node.coords.a + 1));
+			}
+			// Check seq2
+			if (node.coords.b == node.prev.coords.b) {
+				// Gap in seq2
+				subseq2.append(GAP_CHARACTER);
+			} else {
+				// Match in seq2
+				subseq2.append(seq2.charAt(node.coords.b));
+			}
+			node = node.prev;
+		}
+
+		// Reverse stringbuilders
+		subseq1 = subseq1.reverse();
+		subseq2 = subseq2.reverse();
+	}
+
 	public static void main(String[] args) {
 		BLOSUM62Table table = new BLOSUM62Table();
 		LinkedNode result = LocalSequenceAligner.align(table, "KEVLAR", "KNIEVIL");
+		LocalSequenceAligner.printAlignment(result, "name1", "name2", "KEVLAR", "KNIEVIL");
+		// TODO empirical p-value calculation using sequence permutation
+		// TODO actual main method control with permutation count and seeds
 		// TODO
 	}
 
