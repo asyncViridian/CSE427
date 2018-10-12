@@ -4,8 +4,8 @@ import java.util.*;
 
 public class BLOSUM62Table {
 	// We can ignore B, Z, X, and * rows
-	private static final char[] INPUT_HEADER = {'A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L',
-			'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V'/* , 'B', 'Z', 'X', '*' */ };
+	private static final char[] INPUT_HEADER = { 'A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K', 'M', 'F',
+			'P', 'S', 'T', 'W', 'Y', 'V'/* , 'B', 'Z', 'X', '*' */ };
 
 	private static final String INPUT_TABLE = "A  4 -1 -2 -2  0 -1 -1  0 -2 -1 -1 -1 -1 -2 -1  1  0 -3 -2  0 -2 -1  0 -4 \r\n"
 			+ "R -1  5  0 -2 -3  1  0 -2  0 -3 -2  2 -1 -3 -2 -1 -1 -3 -2 -3 -1  0 -1 -4 \r\n"
@@ -31,14 +31,14 @@ public class BLOSUM62Table {
 			+ "Z -1  0  0  1 -3  3  4 -2  0 -3 -3  1 -1 -3 -1  0 -1 -3 -2 -2  1  4 -1 -4 \r\n"
 			+ "X  0 -1 -1 -1 -2 -1 -1 -1 -1 -1 -1 -1 -1 -1 -2  0  0 -2 -1 -1 -1 -1 -1 -4 \r\n"
 			+ "* -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4 -4  1 ";
-	private final Map<UnorderedPair, Integer> BLOSUM62 = new HashMap<>();
+	private final Map<Pair<Character>, Integer> BLOSUM62 = new HashMap<>();
 
 	public BLOSUM62Table() {
 		Scanner scanner = new Scanner(INPUT_TABLE);
 		for (int i = 0; i < INPUT_HEADER.length; i++) {
 			char current = scanner.next().charAt(0);
 			for (int j = 0; j < INPUT_HEADER.length; j++) {
-				BLOSUM62.put(new UnorderedPair(INPUT_HEADER[j], current), scanner.nextInt());
+				BLOSUM62.put(sortedPair(INPUT_HEADER[j], current), scanner.nextInt());
 			}
 			scanner.nextLine();
 		}
@@ -46,37 +46,14 @@ public class BLOSUM62Table {
 	}
 
 	public Integer lookup(char c1, char c2) {
-		return this.BLOSUM62.get(new UnorderedPair(c1, c2));
+		return this.BLOSUM62.get(sortedPair(c1, c2));
 	}
 
-	private class UnorderedPair {
-		private char a;
-		private char b;
-
-		public UnorderedPair(char a, char b) {
-			this.a = a;
-			this.b = b;
-		}
-
-		@Override
-		public boolean equals(Object o) {
-			if (!(o instanceof UnorderedPair)) {
-				return false;
-			}
-
-			UnorderedPair other = (UnorderedPair) o;
-			if (this.a == other.a && this.b == other.b) {
-				return true;
-			} else if (this.a == other.b && this.b == other.a) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		@Override
-		public int hashCode() {
-			return this.a * this.b;
+	private Pair<Character> sortedPair(char c1, char c2) {
+		if (c1 < c2) {
+			return new Pair<Character>(c1, c2);
+		} else {
+			return new Pair<Character>(c2, c1);
 		}
 	}
 }
