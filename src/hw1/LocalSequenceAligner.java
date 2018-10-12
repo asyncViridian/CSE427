@@ -26,9 +26,8 @@ public class LocalSequenceAligner {
 		LinkedNode maxScoreFound = new LinkedNode(null, 0, null);
 
 		// Iterate through all of the cells as they gain 3 top-left neighbors
-		for (int sum = 2; sum <= seq1.length() + seq2.length(); sum++) {
-			for (int i = Math.max(1, sum - seq1.length() - 1); i < sum && i <= seq1.length(); i++) {
-				int j = sum - i;
+		for (int i = 1; i <= seq1.length(); i++) {
+			for (int j = 1; j <= seq2.length(); j++) {
 				char seq1char = seq1.charAt(i - 1);
 				char seq2char = seq2.charAt(j - 1);
 
@@ -65,7 +64,47 @@ public class LocalSequenceAligner {
 			}
 		}
 
+		// Print the score table (if applicable)
+		printScoreTable(substringScoreTable, seq1, seq2, Math.round(Math.ceil(Math.log10(maxScoreFound.value))));
 		return maxScoreFound;
+	}
+
+	private static void printScoreTable(Map<Pair<Integer>, LinkedNode> scoreTable, String seq1, String seq2,
+			long spacing) {
+		if (seq1.length() > 15) {
+			return;
+		}
+		if (seq2.length() > 15) {
+			return;
+		}
+
+		seq1 = " " + seq1;
+		seq2 = " " + seq2;
+
+		// Print header row
+		System.out.printf("  |");
+		for (int i = 0; i < seq2.length(); i++) {
+			System.out.printf(" %" + spacing + "C", seq2.charAt(i));
+		}
+		System.out.println();
+
+		// Print separator row
+		System.out.printf("--+");
+		for (int i = 0; i < (spacing + 1) * seq2.length(); i++) {
+			System.out.print("-");
+		}
+		System.out.println();
+
+		// Print each score row
+		for (int i = 0; i < seq1.length(); i++) {
+			System.out.printf("%C |", seq1.charAt(i));
+			for (int j = 0; j < seq2.length(); j++) {
+				System.out.printf(" %" + spacing + "d", scoreTable.get(new Pair<Integer>(i, j)).value);
+			}
+			System.out.println();
+		}
+
+		System.out.println();
 	}
 
 	private static void printAlignment(BLOSUM62Table table, LinkedNode node, String name1, String name2, String seq1,
@@ -108,8 +147,9 @@ public class LocalSequenceAligner {
 			if (subseq1.charAt(i) == subseq2.charAt(i)) {
 				// Exact match
 				similar.append(subseq1.charAt(i));
-			} else if (table.lookup(subseq1.charAt(i), subseq2.charAt(i)) > 0) {
-				// Positive substitution score
+			} else if (subseq1.charAt(i) != '-' && subseq2.charAt(i) != '-'
+					&& table.lookup(subseq1.charAt(i), subseq2.charAt(i)) > 0) {
+				// Positive substitution score (no gap)
 				similar.append('+');
 			} else {
 				// Nothing we want to mark
@@ -119,10 +159,10 @@ public class LocalSequenceAligner {
 
 		// Print this stuff to the console!
 		for (int i = 0; i < subseq1.length(); i += CONSOLE_WIDTH) {
-			System.out.printf("%8s:%4d %s\n", name1, index1,
+			System.out.printf("%8s:%4d %s%n", name1, index1,
 					subseq1.substring(i, Math.min(i + CONSOLE_WIDTH, subseq1.length())));
-			System.out.printf("%13s %s\n", "", similar.substring(i, Math.min(i + CONSOLE_WIDTH, similar.length())));
-			System.out.printf("%8s:%4d %s\n", name2, index2,
+			System.out.printf("%13s %s%n", "", similar.substring(i, Math.min(i + CONSOLE_WIDTH, similar.length())));
+			System.out.printf("%8s:%4d %s%n", name2, index2,
 					subseq2.substring(i, Math.min(i + CONSOLE_WIDTH, subseq2.length())));
 			System.out.println();
 		}
@@ -130,11 +170,12 @@ public class LocalSequenceAligner {
 
 	public static void main(String[] args) {
 		BLOSUM62Table table = new BLOSUM62Table();
-		LinkedNode result = LocalSequenceAligner.align(table, "KEVLAR", "KNIEVIL");
-		LocalSequenceAligner.printAlignment(table, result, "name1", "name2", "KEVLAR", "KNIEVIL");
-		// TODO empirical p-value calculation using sequence permutation
+		String seq1 = "KEVLAR";
+		String seq2 = "KNIEVIL";
+		LinkedNode result = LocalSequenceAligner.align(table, seq1, seq2);
+		LocalSequenceAligner.printAlignment(table, result, "name1", "name2", seq1, seq2);
 		// TODO actual main method control with permutation count and seeds
-		// TODO
+		// TODO optional empirical p-value calculation using sequence permutation
 	}
 
 }
