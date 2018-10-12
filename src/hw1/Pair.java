@@ -1,8 +1,8 @@
 package hw1;
 
 public class Pair<E> {
-	private E a;
-	private E b;
+	private final E a;
+	private final E b;
 
 	public Pair(E a, E b) {
 		this.a = a;
