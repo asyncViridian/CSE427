@@ -239,6 +239,7 @@ public class LocalSequenceAligner {
 
         // Read sequence inputs (FASTA)
         Map<String, String> proteins = new HashMap<>();
+        List<String> listNames = new ArrayList<>();
         Scanner console = new Scanner(System.in);
         String line = console.nextLine();
         String proteinName = line.split("\\|")[1];
@@ -249,6 +250,7 @@ public class LocalSequenceAligner {
             if (line.length() > 0 && line.charAt(0) == '>') {
                 // Beginning of a new protein entry
                 proteins.put(proteinName, proteinContent);
+                listNames.add(proteinName);
                 proteinName = line.split("\\|")[1];
             } else {
                 // Continuation of a protein
@@ -257,11 +259,32 @@ public class LocalSequenceAligner {
         }
         // Close the last protein
         proteins.put(proteinName, proteinContent);
+        listNames.add(proteinName);
 
-        String seq1 = "MELLSLCSWFAAATTYDADFYDDP";
-        String seq2 = "MSNWTATSSDSTS";
-        int score = performComparisonAnalysis(table, "name1", "name2", seq1, seq2, random, numPermutations);
-        // TODO actual main method control with permutation count and seeds
+        // Do all alignments
+        List<Integer> scores = new ArrayList<>();
+        for (int i = 0; i < listNames.size(); i++) {
+            for (int j = i + 1; j < listNames.size(); j++) {
+                scores.add(performComparisonAnalysis(table, listNames.get(i), listNames.get(j),
+                        proteins.get(listNames.get(i)), proteins.get(listNames.get(j)), random, numPermutations));
+            }
+        }
+        System.out.println();
+
+        // Print score matrix
+        int current = 0;
+        for (int i = 0; i < listNames.size(); i++) {
+            for (int j = 0; j < listNames.size(); j++) {
+                if (i >= j) {
+                    // 0 in lower triangle and main diagonal
+                    System.out.printf("%5d ", 0);
+                } else {
+                    System.out.printf("%5d ", scores.get(current));
+                    current++;
+                }
+            }
+            System.out.println();
+        }
     }
 
 }
