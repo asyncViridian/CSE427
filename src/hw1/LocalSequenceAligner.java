@@ -238,8 +238,25 @@ public class LocalSequenceAligner {
         }
 
         // Read sequence inputs (FASTA)
+        Map<String, String> proteins = new HashMap<>();
         Scanner console = new Scanner(System.in);
-        // TODO read fasta input
+        String line = console.nextLine();
+        String proteinName = line.split("\\|")[1];
+        String proteinContent = "";
+        // Get the first protein
+        while (console.hasNextLine()) {
+            line = console.nextLine();
+            if (line.length() > 0 && line.charAt(0) == '>') {
+                // Beginning of a new protein entry
+                proteins.put(proteinName, proteinContent);
+                proteinName = line.split("\\|")[1];
+            } else {
+                // Continuation of a protein
+                proteinContent = proteinContent + line;
+            }
+        }
+        // Close the last protein
+        proteins.put(proteinName, proteinContent);
 
         String seq1 = "MELLSLCSWFAAATTYDADFYDDP";
         String seq2 = "MSNWTATSSDSTS";
