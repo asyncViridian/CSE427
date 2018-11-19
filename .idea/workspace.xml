@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47536c5e-73d3-458a-ada4-52f077e3be4d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw1/LinkedNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/LinkedNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw1/LocalSeqAlign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/LocalSeqAlign.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw1/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/hw3/temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw3/temp.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" afterDir="false" />
     </list>
@@ -56,12 +52,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="44" />
-          <entry key="java" value="13458" />
+          <entry key="java" value="15463" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="13458" />
+          <entry key="JAVA" value="15463" />
           <entry key="PLAIN_TEXT" value="44" />
         </counts>
       </usages-collector>
@@ -90,8 +86,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="200" column="48" selection-start-line="200" selection-start-column="47" selection-end-line="200" selection-end-column="48" />
+            <state relative-caret-position="168">
+              <caret line="200" column="43" lean-forward="true" selection-start-line="200" selection-start-column="43" selection-end-line="200" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;method#calculateNext#0;class#GCPatchFinder#0" />
@@ -107,8 +103,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchHMM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="93">
-              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+            <state relative-caret-position="360">
+              <caret line="86" column="29" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="29" />
               <folding>
                 <element signature="method#GCPatchHMM#0;class#GCPatchHMM#0" />
                 <element signature="e#4715#4716#0" expanded="true" />
@@ -217,7 +213,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542607076516" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542611424334" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents/Transfer/grading/maxdvg" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -318,8 +314,8 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295583" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.31823328" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3510759" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.25481313" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.5753114" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295583" />
@@ -351,15 +347,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java</url>
-          <line>71</line>
+          <line>34</line>
           <properties />
-          <option name="timeStamp" value="17" />
+          <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java</url>
-          <line>59</line>
+          <line>94</line>
           <properties />
-          <option name="timeStamp" value="19" />
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java</url>
+          <line>141</line>
+          <properties />
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -367,12 +369,17 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>(nextChar == -1) || (nextChar == '&gt;')</expression-string>
+        <expression-string>(char) seqIterator.nextChar</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
         <expression-string>(char) nextChar</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>(nextChar == -1) || (nextChar == '&gt;')</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -485,8 +492,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchHMM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+        <state relative-caret-position="360">
+          <caret line="86" column="29" selection-start-line="86" selection-start-column="28" selection-end-line="86" selection-end-column="29" />
           <folding>
             <element signature="method#GCPatchHMM#0;class#GCPatchHMM#0" />
             <element signature="e#4715#4716#0" expanded="true" />
@@ -497,8 +504,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="200" column="48" selection-start-line="200" selection-start-column="47" selection-end-line="200" selection-end-column="48" />
+        <state relative-caret-position="168">
+          <caret line="200" column="43" lean-forward="true" selection-start-line="200" selection-start-column="43" selection-end-line="200" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="docComment;method#calculateNext#0;class#GCPatchFinder#0" />

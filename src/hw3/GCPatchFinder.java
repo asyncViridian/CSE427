@@ -11,10 +11,6 @@ import java.util.Stack;
 public class GCPatchFinder {
     public static final double BEGIN_STATE1 = 0.9999;
     public static final double BEGIN_STATE2 = 0.0001;
-    private static GCPatchHMM currentHMM = new GCPatchHMM(
-            new GCPatchHMM.EmitProbabilities(0.25, 0.25, 0.25, 0.25),
-            new GCPatchHMM.EmitProbabilities(0.2, 0.3, 0.3, 0.2),
-            0.9999, 0.0001, 0.01, 0.99);
 
     public static void main(String[] args) throws IOException {
         if (args.length != 1) {
@@ -22,24 +18,44 @@ public class GCPatchFinder {
             return;
         }
 
-        try (BufferedReader in = new BufferedReader(new FileReader(args[0]))) {
-            // Get FASTA format input: assume properly formatted
-            // Load the sequence into input iterator
-            InputIterator seqIterator = new InputIterator(in);
+        BufferedReader in = new BufferedReader(new FileReader(args[0]));
+        // Get FASTA format input: assume properly formatted
+        // Load the sequence into input iterator
+        InputIterator seqIterator = new InputIterator(in);
 
+        // Initialize our HMM
+        GCPatchHMM currentHMM = new GCPatchHMM(
+                new GCPatchHMM.EmitProbabilities(0.25, 0.25, 0.25, 0.25),
+                new GCPatchHMM.EmitProbabilities(0.2, 0.3, 0.3, 0.2),
+                0.9999, 0.0001, 0.01, 0.99);
+
+        for (int i = 0; i < 9; i++) {
             // Perform Viterbi traceback on input
-            ViterbiNode result = viterbiTraceback(currentHMM, seqIterator, 10);
+            HMMTrainer trainer = new HMMTrainer();
+            viterbiTraceback(currentHMM, seqIterator, 5, trainer);
+            in.close();
+            in = new BufferedReader(new FileReader(args[0]));
+            seqIterator = new InputIterator(in);
 
+            // And complete Viterbi training (iterate!)
+            currentHMM = trainer.getModel();
         }
+
+        // Run our final analysis
+        viterbiTraceback(currentHMM, seqIterator, -1, new HMMTrainer());
     }
 
-    public static ViterbiNode viterbiTraceback(GCPatchHMM hmm, Iterator<Character> inputSeq, int numResultsToPrint) {
+    private static void viterbiTraceback(GCPatchHMM hmm,
+                                                Iterator<Character> inputSeq,
+                                                int numResultsToPrint,
+                                                HMMTrainer trainer) {
         System.out.println(hmm);
+        double startTime = System.nanoTime();
         if (!inputSeq.hasNext()) {
             // No input at all. >:[
             // TODO figure out what to do in this case that would make sense...
             System.err.println("No properly formatted input found");
-            return null;
+            return;
         }
 
         // Initialize states with beginning information
@@ -49,11 +65,11 @@ public class GCPatchFinder {
         ViterbiNode[] currentStep = {
                 new ViterbiNode(null, states[0],
                         Math.log(GCPatchFinder.BEGIN_STATE1
-                                * currentHMM.emitProb(first, states[0])),
+                                * hmm.emitProb(first, states[0])),
                         1, first),
                 new ViterbiNode(null, states[1],
                         Math.log(GCPatchFinder.BEGIN_STATE2
-                                * currentHMM.emitProb(first, states[1])),
+                                * hmm.emitProb(first, states[1])),
                         1, first)};
 
         // Step through input seq
@@ -76,9 +92,9 @@ public class GCPatchFinder {
         }
 
         // Print out the result information
-        printResultInfo(result, numResultsToPrint);
-
-        return result;
+        printResultInfo(result, numResultsToPrint, trainer);
+        System.out.println("Time taken for this iteration: " +
+                (System.nanoTime() - startTime) + " nanoseconds");
     }
 
     /**
@@ -115,7 +131,7 @@ public class GCPatchFinder {
         return new ViterbiNode(bestNode, targetState, bestLogProb, bestNode.index + 1, c);
     }
 
-    private static void printResultInfo(ViterbiNode n, int k) {
+    private static void printResultInfo(ViterbiNode n, int k, HMMTrainer trainer) {
         System.out.println("log(probability) = \t" + n.logProb);
 
         // Read through and get hits
@@ -123,6 +139,7 @@ public class GCPatchFinder {
         boolean inHit = false;
         int lastEnding = 1;
         while (n != null) {
+            trainer.addToTrainer(n);
             if (inHit && n.state == GCPatchHMM.HMMState.BACKGROUND) {
                 // A hit just ended!
                 hits.push(new Pair<>(n.index + 1, lastEnding));
@@ -152,6 +169,82 @@ public class GCPatchFinder {
             Pair<Integer> hit = hits.pop();
             System.out.printf("|%-8d|%-8d|%-8d|\n",
                     hit.a, hit.b, hit.b - hit.a + 1);
+        }
+    }
+
+    private static class HMMTrainer {
+        // Note: 1 because we use pseudocounts!
+
+        // Counts of each emission in a state (A,C,G,T respectively)
+        private int[] backgroundEmit = {1, 1, 1, 1};
+        private int[] GCEmit = {1, 1, 1, 1};
+        // Counts of each transition (B>B,B>G,G>B,G>G respectively)
+        private int[] numTransitions = {1, 1, 1, 1};
+
+        public void addToTrainer(ViterbiNode n) {
+            // increment emit
+            if (n.state == GCPatchHMM.HMMState.BACKGROUND) {
+                if (n.emitted == 'A') {
+                    backgroundEmit[0]++;
+                } else if (n.emitted == 'C') {
+                    backgroundEmit[1]++;
+                } else if (n.emitted == 'G') {
+                    backgroundEmit[2]++;
+                } else if (n.emitted == 'T') {
+                    backgroundEmit[3]++;
+                }
+            } else { //n.state== GCPatchHMM.HMMState.GC
+                if (n.emitted == 'A') {
+                    GCEmit[0]++;
+                } else if (n.emitted == 'C') {
+                    GCEmit[1]++;
+                } else if (n.emitted == 'G') {
+                    GCEmit[2]++;
+                } else if (n.emitted == 'T') {
+                    GCEmit[3]++;
+                }
+            }
+
+            // increment transition
+            if (n.state == GCPatchHMM.HMMState.BACKGROUND) {
+                if (n.prev != null) {
+                    if (n.prev.state == GCPatchHMM.HMMState.BACKGROUND) {
+                        numTransitions[0]++;
+                    } else if (n.prev.state == GCPatchHMM.HMMState.GC) {
+                        numTransitions[2]++;
+                    }
+                }
+            } else { //n.state== GCPatchHMM.HMMState.GC
+                if (n.prev != null) {
+                    if (n.prev.state == GCPatchHMM.HMMState.BACKGROUND) {
+                        numTransitions[1]++;
+                    } else if (n.prev.state == GCPatchHMM.HMMState.GC) {
+                        numTransitions[3]++;
+                    }
+                }
+            }
+        }
+
+        public GCPatchHMM getModel() {
+            double totalBEmit = backgroundEmit[0] + backgroundEmit[1] + backgroundEmit[2] + backgroundEmit[3];
+            double totalGEmit = GCEmit[0] + GCEmit[1] + GCEmit[2] + GCEmit[3];
+            double totalFromB = numTransitions[0] + numTransitions[1];
+            double totalFromG = numTransitions[2] + numTransitions[3];
+            return new GCPatchHMM(
+                    new GCPatchHMM.EmitProbabilities(
+                            (double) backgroundEmit[0] / totalBEmit,
+                            (double) backgroundEmit[1] / totalBEmit,
+                            (double) backgroundEmit[2] / totalBEmit,
+                            (double) backgroundEmit[3] / totalBEmit),
+                    new GCPatchHMM.EmitProbabilities(
+                            (double) GCEmit[0] / totalGEmit,
+                            (double) GCEmit[1] / totalGEmit,
+                            (double) GCEmit[2] / totalGEmit,
+                            (double) GCEmit[3] / totalGEmit),
+                    numTransitions[0] / totalFromB,
+                    numTransitions[1] / totalFromB,
+                    numTransitions[2] / totalFromG,
+                    numTransitions[3] / totalFromG);
         }
     }
 

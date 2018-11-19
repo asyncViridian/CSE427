@@ -77,13 +77,14 @@ public class GCPatchHMM {
                         "%-8s%-8s%-8s%-8s%-8s\n" +
                         "%-8s" + this.state1 + "\n" +
                         "%-8s" + this.state2 + "\n" +
-                        "Trans\tBG\tCG\n" +
+                        "%-8s%-8s%-8s\n" +
                         "%-8s%-8.5f%-8.5f\n" +
                         "%-8s%-8.5f%-8.5f\n" +
-                        "%-8s%-8.5f%-8.5f\n",
+                        "%-8s%-8.5f%-8.5f",
                 "Emit", "A", "C", "G", "T",
                 "BG",
                 "CG",
+                "Trans", "BG", "CG",
                 "Begin", GCPatchFinder.BEGIN_STATE1, GCPatchFinder.BEGIN_STATE2,
                 "BG", this.p1to1, this.p1to2,
                 "CG", this.p2to1, this.p2to2);
