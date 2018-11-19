@@ -1,8 +1,10 @@
 package hw1;
 
+import general.Pair;
+
 import java.util.*;
 
-// TODO make this
+// TODO make this fully static, maybe?
 public class BLOSUM62Table {
     // We can ignore B, Z, X, and * rows
     public static final char[] INPUT_HEADER =

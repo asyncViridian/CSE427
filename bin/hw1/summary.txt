@@ -1,0 +1,33 @@
+Joyce Zhou
+1670289
+
+I did 999 trials for test3 and test4. The p-value I got for test 3 was unusually 
+low given that the compared proteins seem like they should be relatively
+unrelated. Perhaps this is because of extremely bad luck, or (more likely) a bug
+in my code that is extremely hard to track down?
+
+I ran my alignment code for all combinations of the proteins in the given table
+with 999 permutations. As expected, the MyoD protein alignments had high scores 
+and low P-values (1.0e-3, the lowest possible for 999 permutations). Differences
+between different MyoD proteins seem to be either medium-length sections with
+intermittent differences, or several amino acids in a row removed or different.
+This makes sense - the difference areas are probably non-critical and don't need
+to be an exact shape. I'm curious how alignment looks with more than two proteins
+at a time, and what the algorithms for that are.
+
+I also notice P10085 and Q8IU24 (mouse MyoD and an "unreviewed" Amphi-MyoD) matched
+pretty well. Assuming that "unreviewed" means not human-confirmed, then do
+protein databases like UniProt automatically categorize proteins based on their 
+similarity to already-reviewed proteins? Would that be based on alignment scores
+and P/E-values?
+
+Extra credit done: 
+- (a) Generate fancy alignment output format :)
+- (b) The linked shuffle algorithm (for each card, swap it with a random card)
+    doesn't work for a 2 card deck. 
+    Possible outcomes of a 2-card deck AB:
+    1st->1st, 2nd->1st: AB -> AB -> BA
+    1st->1st, 2nd->2nd: AB -> AB -> AB
+    1st->2nd, 2nd->1st: AB -> BA -> AB
+    1st->2nd, 2nd->2nd: AB -> AB -> AB
+    3/4 of the outcomes are AB, but that fraction should only be 1/2.

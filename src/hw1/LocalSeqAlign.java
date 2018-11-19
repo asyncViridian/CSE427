@@ -1,5 +1,7 @@
 package hw1;
 
+import general.Pair;
+
 import java.util.*;
 
 /**

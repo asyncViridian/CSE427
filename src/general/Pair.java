@@ -1,4 +1,4 @@
-package hw1;
+package general;
 
 public class Pair<E> {
 	public final E a;

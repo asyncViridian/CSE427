@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47536c5e-73d3-458a-ada4-52f077e3be4d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hw1/LinkedNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/LinkedNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hw1/LocalSeqAlign.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/LocalSeqAlign.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hw1/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/general/Pair.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,50 +56,63 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="44" />
-          <entry key="java" value="5406" />
+          <entry key="java" value="13458" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="5406" />
+          <entry key="JAVA" value="13458" />
           <entry key="PLAIN_TEXT" value="44" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="class" value="2" />
           <entry key="fasta" value="1" />
+          <entry key="fna" value="2" />
           <entry key="iml" value="1" />
-          <entry key="java" value="5" />
+          <entry key="java" value="11" />
           <entry key="txt" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
+          <entry key="CLASS" value="2" />
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="5" />
-          <entry key="PLAIN_TEXT" value="8" />
+          <entry key="JAVA" value="11" />
+          <entry key="PLAIN_TEXT" value="10" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+            <state relative-caret-position="297">
+              <caret line="200" column="48" selection-start-line="200" selection-start-column="47" selection-end-line="200" selection-end-column="48" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="docComment;method#calculateNext#0;class#GCPatchFinder#0" />
+                <element signature="method#calculateNext#0;class#GCPatchFinder#0" />
+                <element signature="class#ViterbiNode#0;class#GCPatchFinder#0" />
+                <element signature="e#6995#6996#0" expanded="true" />
+                <element signature="e#7052#7053#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchHMM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+            <state relative-caret-position="93">
+              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
               <folding>
                 <element signature="method#GCPatchHMM#0;class#GCPatchHMM#0" />
+                <element signature="e#4715#4716#0" expanded="true" />
+                <element signature="e#4758#4759#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,6 +130,10 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>main(St</find>
+      <find>P</find>
+      <find>hits</find>
+      <find>emission</find>
+      <find>System.out.println(</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -130,10 +151,13 @@
       <list>
         <option value="$PROJECT_DIR$/src/hw1/LocalSequenceAligner.java" />
         <option value="$PROJECT_DIR$/src/hw3/ViterbiGCPatchFinder.java" />
-        <option value="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" />
         <option value="$PROJECT_DIR$/src/hw3/GCHMM.java" />
-        <option value="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" />
+        <option value="$PROJECT_DIR$/src/Pair.java" />
+        <option value="$PROJECT_DIR$/src/hw1/LocalSeqAlign.java" />
+        <option value="$PROJECT_DIR$/src/hw1/LinkedNode.java" />
+        <option value="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" />
         <option value="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" />
+        <option value="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" />
       </list>
     </option>
   </component>
@@ -165,6 +189,12 @@
             <path>
               <item name="CSE427" type="b2602c69:ProjectViewProjectNode" />
               <item name="CSE427" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="hw3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CSE427" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSE427" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -187,7 +217,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542589473164" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542607076516" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents/Transfer/grading/maxdvg" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -214,14 +244,14 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="LocalSeqAlign" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="hw1.LocalSeqAlign" />
+  <component name="RunManager" selected="Application.GCPatchFinder">
+    <configuration name="GCPatchFinder" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="hw3.GCPatchFinder" />
       <module name="CSE427" />
-      <option name="PROGRAM_PARAMETERS" value="--permutations 9" />
+      <option name="PROGRAM_PARAMETERS" value="data/hw3/GCF_000091665.1_ASM9166v1_genomic.fna" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="hw1.*" />
+          <option name="PATTERN" value="hw3.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -229,6 +259,24 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LocalSeqAlign" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="hw1.LocalSeqAlign" />
+      <module name="CSE427" />
+      <option name="PROGRAM_PARAMETERS" value="--permutations 9" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.GCPatchFinder" />
+      <item itemvalue="Application.LocalSeqAlign" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.LocalSeqAlign" />
@@ -261,7 +309,7 @@
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3528464" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3528464" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -269,16 +317,16 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.3295583" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3148358" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.27406567" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3295583" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31823328" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3510759" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295583" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3295583" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3295583" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.32993197" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.3295583" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -301,11 +349,38 @@
           <properties />
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java</url>
+          <line>71</line>
+          <properties />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java</url>
+          <line>59</line>
+          <properties />
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>(nextChar == -1) || (nextChar == '&gt;')</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>(char) nextChar</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>currentHMM.emitProb(first, states[0])</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>line.split(&quot;\|&quot;)</expression-string>
         <language-id>JAVA</language-id>
@@ -338,13 +413,6 @@
     <entry file="file://$PROJECT_DIR$/data/hw1/test4.fasta">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/hw1/BLOSUM62Table.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-138">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/hw1/summary.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-110">
@@ -352,35 +420,92 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/jre/lib/rt.jar!/java/util/Iterator.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" column="12" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/general/Pair.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hw1/LinkedNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/hw3/GCF_000091665.1_ASM9166v1_genomic.fna">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="7" column="30" lean-forward="true" selection-end-line="21754" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hw1/BLOSUM62Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="49" column="24" selection-start-line="49" selection-start-column="24" selection-end-line="49" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/hw1/LocalSeqAlign.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="237" column="43" selection-start-line="237" selection-start-column="43" selection-end-line="237" selection-end-column="43" />
+        <state relative-caret-position="268">
+          <caret line="268" selection-start-line="268" selection-end-line="268" />
           <folding>
-            <element signature="method#align#0;class#LocalSeqAlign#0" />
+            <element signature="imports" expanded="true" />
             <element signature="method#printScoreTable#0;class#LocalSeqAlign#0" />
             <element signature="method#printAlignment#0;class#LocalSeqAlign#0" />
             <element signature="method#calculatePValue#0;class#LocalSeqAlign#0" />
             <element signature="method#performComparisonAnalysis#0;class#LocalSeqAlign#0" />
             <element signature="method#filterProteinSequence#0;class#LocalSeqAlign#0" />
-            <element signature="method#main#0;class#LocalSeqAlign#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/jre/lib/rt.jar!/java/util/Formatter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="2174" selection-start-line="2174" selection-end-line="2174" />
+          <folding>
+            <element signature="e#79865#79866#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchHMM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="93">
+          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+          <folding>
+            <element signature="method#GCPatchHMM#0;class#GCPatchHMM#0" />
+            <element signature="e#4715#4716#0" expanded="true" />
+            <element signature="e#4758#4759#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchHMM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+        <state relative-caret-position="297">
+          <caret line="200" column="48" selection-start-line="200" selection-start-column="47" selection-end-line="200" selection-end-column="48" />
           <folding>
-            <element signature="method#GCPatchHMM#0;class#GCPatchHMM#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;method#calculateNext#0;class#GCPatchFinder#0" />
+            <element signature="method#calculateNext#0;class#GCPatchFinder#0" />
+            <element signature="class#ViterbiNode#0;class#GCPatchFinder#0" />
+            <element signature="e#6995#6996#0" expanded="true" />
+            <element signature="e#7052#7053#0" expanded="true" />
           </folding>
         </state>
       </provider>
