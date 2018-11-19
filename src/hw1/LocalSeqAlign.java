@@ -2,7 +2,10 @@ package hw1;
 
 import java.util.*;
 
-public class LocalSequenceAligner {
+/**
+ * @author Joyce Zhou (16570289)
+ */
+public class LocalSeqAlign {
 
     private static final int GAP_PENALTY = -4;
     private static final char GAP_CHARACTER = '-';
@@ -203,8 +206,8 @@ public class LocalSequenceAligner {
 
     private static int performComparisonAnalysis(BLOSUM62Table table, String name1, String name2, String seq1,
                                                  String seq2, Random random, int numPermutations) {
-        LinkedNode result = LocalSequenceAligner.align(table, seq1, seq2, true);
-        LocalSequenceAligner.printAlignment(table, result, name1, name2, seq1, seq2);
+        LinkedNode result = LocalSeqAlign.align(table, seq1, seq2, true);
+        LocalSeqAlign.printAlignment(table, result, name1, name2, seq1, seq2);
         System.out.printf("Total score: " + result.value + "%n");
         if (numPermutations > 0) {
             System.out.printf("Estimated P-value: %e", calculatePValue(table, seq1, seq2, result.value, random, numPermutations));
@@ -213,10 +216,29 @@ public class LocalSequenceAligner {
         return result.value;
     }
 
+    private static String filterProteinSequence(String sequence) {
+        StringBuilder filtered = new StringBuilder();
+        for (int i = 0; i < sequence.length(); i++) {
+            for (int j = 0; j < BLOSUM62Table.INPUT_HEADER.length; j++) {
+                if (BLOSUM62Table.INPUT_HEADER[j] == sequence.charAt(i)) {
+                    filtered.append(sequence.charAt(i));
+                    break;
+                }
+            }
+        }
+        return filtered.toString();
+    }
+
+    /**
+     * Locally aligns all FASTA-formatted sequences entered via System.in (command line) with the given parameters.
+     *
+     * @param args --permutations [number of permutations to run to calculate P-value]
+     *             --seed [seed for RNG]
+     */
     public static void main(String[] args) {
         // Usage message
         if (args.length % 2 != 0) {
-            System.err.println("Usage: java LocalSequenceAligner [--permutations PPP] [--seed NNN]");
+            System.err.println("Usage: java LocalSeqAlign [--permutations PPP] [--seed NNN]");
             return;
         }
 
@@ -252,9 +274,11 @@ public class LocalSequenceAligner {
                 proteins.put(proteinName, proteinContent);
                 listNames.add(proteinName);
                 proteinName = line.split("\\|")[1];
+                proteinContent = "";
             } else {
                 // Continuation of a protein
-                proteinContent = proteinContent + line;
+                proteinContent = proteinContent + filterProteinSequence(line);
+
             }
         }
         // Close the last protein
