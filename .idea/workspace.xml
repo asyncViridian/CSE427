@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47536c5e-73d3-458a-ada4-52f077e3be4d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/O95363.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/O95363.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/P10085.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/P10085.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/P13904.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/P13904.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/P15172.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/P15172.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/P16075.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/P16075.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/P17542.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/P17542.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/P22816.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/P22816.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Q10574.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/Q10574.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Q8IU24.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/Q8IU24.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Q90477.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/Q90477.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/concat.fasta" beforeDir="false" afterPath="$PROJECT_DIR$/data/hw1/concat.fasta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw1/LocalSequenceAligner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw1/LocalSeqAlign.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,29 +51,29 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="dummy" value="26" />
-          <entry key="java" value="3812" />
+          <entry key="dummy" value="44" />
+          <entry key="java" value="5406" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3812" />
-          <entry key="PLAIN_TEXT" value="26" />
+          <entry key="JAVA" value="5406" />
+          <entry key="PLAIN_TEXT" value="44" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="fasta" value="1" />
           <entry key="iml" value="1" />
-          <entry key="java" value="3" />
-          <entry key="txt" value="6" />
+          <entry key="java" value="5" />
+          <entry key="txt" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="IDEA_MODULE" value="1" />
-          <entry key="JAVA" value="3" />
-          <entry key="PLAIN_TEXT" value="7" />
+          <entry key="JAVA" value="5" />
+          <entry key="PLAIN_TEXT" value="8" />
         </counts>
       </usages-collector>
     </session>
@@ -95,16 +84,19 @@
         <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+              <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/hw1/BLOSUM62Table.java">
+        <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchHMM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+            <state relative-caret-position="303">
+              <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+              <folding>
+                <element signature="method#GCPatchHMM#0;class#GCPatchHMM#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -138,8 +130,10 @@
       <list>
         <option value="$PROJECT_DIR$/src/hw1/LocalSequenceAligner.java" />
         <option value="$PROJECT_DIR$/src/hw3/ViterbiGCPatchFinder.java" />
-        <option value="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" />
         <option value="$PROJECT_DIR$/src/hw1/BLOSUM62Table.java" />
+        <option value="$PROJECT_DIR$/src/hw3/GCHMM.java" />
+        <option value="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" />
+        <option value="$PROJECT_DIR$/src/hw3/GCPatchHMM.java" />
       </list>
     </option>
   </component>
@@ -193,7 +187,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542588288452" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1542589473164" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents/Transfer/grading/maxdvg" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -267,7 +261,7 @@
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3528464" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3528464" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -275,15 +269,15 @@
       <window_info id="Capture Tool" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.3295583" />
+      <window_info anchor="bottom" id="Find" order="1" visible="true" weight="0.3295583" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3148358" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.27406567" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32993197" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3295583" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.3295583" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32993197" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3295583" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32993197" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -344,21 +338,32 @@
     <entry file="file://$PROJECT_DIR$/data/hw1/test4.fasta">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/hw1/BLOSUM62Table.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-138">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/hw1/summary.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="8" column="33" selection-start-line="8" selection-start-column="33" selection-end-line="8" selection-end-column="33" />
+        <state relative-caret-position="-110">
+          <caret line="6" column="27" lean-forward="true" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hw1/LocalSeqAlign.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="291" column="53" selection-start-line="291" selection-start-column="53" selection-end-line="291" selection-end-column="53" />
+        <state relative-caret-position="560">
+          <caret line="237" column="43" selection-start-line="237" selection-start-column="43" selection-end-line="237" selection-end-column="43" />
           <folding>
-            <element signature="method#align#0;class#LocalSequenceAligner#0" />
-            <element signature="method#calculatePValue#0;class#LocalSequenceAligner#0" />
-            <element signature="method#filterProteinSequence#0;class#LocalSequenceAligner#0" />
+            <element signature="method#align#0;class#LocalSeqAlign#0" />
+            <element signature="method#printScoreTable#0;class#LocalSeqAlign#0" />
+            <element signature="method#printAlignment#0;class#LocalSeqAlign#0" />
+            <element signature="method#calculatePValue#0;class#LocalSeqAlign#0" />
+            <element signature="method#performComparisonAnalysis#0;class#LocalSeqAlign#0" />
+            <element signature="method#filterProteinSequence#0;class#LocalSeqAlign#0" />
+            <element signature="method#main#0;class#LocalSeqAlign#0" />
           </folding>
         </state>
       </provider>
@@ -366,14 +371,17 @@
     <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchFinder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+          <caret line="4" column="40" lean-forward="true" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/hw1/BLOSUM62Table.java">
+    <entry file="file://$PROJECT_DIR$/src/hw3/GCPatchHMM.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        <state relative-caret-position="303">
+          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+          <folding>
+            <element signature="method#GCPatchHMM#0;class#GCPatchHMM#0" />
+          </folding>
         </state>
       </provider>
     </entry>
