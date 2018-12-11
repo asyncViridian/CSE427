@@ -33,6 +33,7 @@ public class GCPatchFinder {
             // Perform Viterbi traceback on input
             HMMTrainer trainer = new HMMTrainer();
             viterbiTraceback(currentHMM, seqIterator, 5, trainer);
+            System.out.println();
             in.close();
             in = new BufferedReader(new FileReader(args[0]));
             seqIterator = new InputIterator(in);
@@ -53,7 +54,6 @@ public class GCPatchFinder {
         double startTime = System.nanoTime();
         if (!inputSeq.hasNext()) {
             // No input at all. >:[
-            // TODO figure out what to do in this case that would make sense...
             System.err.println("No properly formatted input found");
             return;
         }
