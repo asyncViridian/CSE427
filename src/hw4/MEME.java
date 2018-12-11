@@ -36,6 +36,7 @@ public class MEME {
         FourMatrix mx = makeCountMatrix(listNames, proteins);
         FourTuple ps = new FourTuple(3);
         mx = addPseudo(mx, ps);
+        mx = makeFrequencyMatrix(mx);
     }
 
     /**
@@ -71,8 +72,7 @@ public class MEME {
      * @return frequency matrix (each coord = fraction of sequences that this nucleotide is here at this position)
      */
     public static FourMatrix makeFrequencyMatrix(FourMatrix countMatrix) {
-        // TODO
-        return null;
+        return countMatrix.convertToFrequency();
     }
 
     /**
@@ -156,6 +156,18 @@ public class MEME {
             return result;
         }
 
+        /**
+         * Return a frequency(this) matrix
+         *
+         * @return conversion of this (count-style) to a (frequency-style) matrix
+         */
+        public FourMatrix convertToFrequency() {
+            FourMatrix result = new FourMatrix();
+            for (int i = 0; i < this.counts.size(); i++) {
+                result.counts.add(this.counts.get(i).frequencyNormalize());
+            }
+            return result;
+        }
     }
 
 
@@ -239,6 +251,22 @@ public class MEME {
             } else if (base == 'T') {
                 this.a[3]++;
             }
+        }
+
+        /**
+         * Return a frequency-normalized version of this vector
+         * (divide all elements by the sum of all elements)
+         *
+         * @return normalized vector
+         */
+        public FourTuple frequencyNormalize() {
+            double sum = this.a[0] + this.a[1] + this.a[2] + this.a[3];
+            FourTuple result = new FourTuple();
+            result.a[0] = this.a[0] / sum;
+            result.a[1] = this.a[1] / sum;
+            result.a[2] = this.a[2] / sum;
+            result.a[3] = this.a[3] / sum;
+            return result;
         }
 
         @Override
