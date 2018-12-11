@@ -31,8 +31,10 @@ public class MEME {
         proteins.put(proteinName, proteinContent);
         listNames.add(proteinName);
 
-        // TODO
-        // Create original count matrix
+        // Generate "background" frequency
+        FourTuple background = new FourTuple(1).frequencyNormalize();
+
+        // TODO test each method
         FourMatrix mx = makeCountMatrix(listNames, proteins);
         FourTuple ps = new FourTuple(3);
         mx = addPseudo(mx, ps);
@@ -73,6 +75,27 @@ public class MEME {
      */
     public static FourMatrix makeFrequencyMatrix(FourMatrix countMatrix) {
         return countMatrix.convertToFrequency();
+    }
+
+    public static double entropy(FourMatrix frequencyMatrix, FourTuple background) {
+        // TODO
+        return 0;
+    }
+
+    public static void makeWMM(FourMatrix frequencyMatrix, FourTuple background) {
+        // TODO
+    }
+
+    public static void scanWMM(List<String> seqs) {
+        // TODO
+    }
+
+    public static void EStep() {
+        // TODO
+    }
+
+    public static void MStep() {
+        // TODO
     }
 
     /**
