@@ -32,13 +32,13 @@ public class MEME {
         listNames.add(proteinName);
 
         // Generate background frequency
-        FourTuple background = new FourTuple(1).frequencyNormalize();
+        FourTuple background = new FourTuple(0.25);
         // Generate pseudocount frequency
-        FourTuple pseudocount = new FourTuple(1).frequencyNormalize();
+        FourTuple pseudocount = new FourTuple(0.25);
         // Initialize motif width
         int motifWidth = 10;
 
-        // Get seed subsequences (EM Initialization)
+        // Get seed subsequences (EM Initialization!)
         List<String> seed = new ArrayList<>();
         String firstSeqName = listNames.get(0);
         String firstSeq = proteins.get(firstSeqName);
@@ -46,8 +46,10 @@ public class MEME {
             seed.add(firstSeq.substring(i, i + motifWidth));
         }
         seed.add(firstSeq.substring(firstSeq.length() - motifWidth));
+        // Get seed pseudocount
+        FourTuple seedPseudocount = new FourTuple(0.85 * seed.size() / 1.85);
 
-        // TODO test each method
+        // TODO add more stuff below
 //        FourMatrix mx = makeCountMatrix(listNames, proteins);
 //        FourTuple ps = new FourTuple(3);
 //        mx = addPseudo(mx, ps);
@@ -135,8 +137,36 @@ public class MEME {
         return scores;
     }
 
-    public static void EStep(FourMatrix WMMMatrix, List<String> seqs) {
-        // TODO
+    /**
+     * Calculate Z_ij (variable 1=motif in seq # 1 starts at position j, 0 = not)
+     *
+     * @param WMMMatrix WMM to use
+     * @param seqs      sequences to calculate off of
+     * @return List where list.get(i) gets variables for ith sequence, list.get(i).get(j) gets Z_ij
+     */
+    public static List<List<Double>> EStep(FourMatrix WMMMatrix, List<String> seqs, Map<String, List<Double>> scannedScores) {
+        double sum = 0;
+
+        // Add all the probabilities (unscaled)
+        List<List<Double>> e = new ArrayList<>();
+        for (String seq : seqs) {
+            List<Double> seqList = new ArrayList<>();
+            for (Double score : scannedScores.get(seq)) {
+                Double newValue = Math.pow(2, score);
+                seqList.add(newValue);
+                sum += newValue;
+            }
+            e.add(seqList);
+        }
+
+        // Scale the probabilities so sum = 1
+        for (List<Double> seqdata : e) {
+            for (int i = 0; i < seqdata.size(); i++) {
+                seqdata.set(i, seqdata.get(i) / sum);
+            }
+        }
+
+        return e;
     }
 
     public static void MStep() {
