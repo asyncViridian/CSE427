@@ -51,18 +51,18 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="44" />
-          <entry key="java" value="20640" />
+          <entry key="java" value="20892" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="20640" />
+          <entry key="JAVA" value="20892" />
           <entry key="PLAIN_TEXT" value="44" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="class" value="2" />
+          <entry key="class" value="3" />
           <entry key="fasta" value="1" />
           <entry key="fna" value="2" />
           <entry key="iml" value="1" />
@@ -72,7 +72,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CLASS" value="2" />
+          <entry key="CLASS" value="3" />
           <entry key="IDEA_MODULE" value="1" />
           <entry key="JAVA" value="15" />
           <entry key="PLAIN_TEXT" value="10" />
@@ -85,33 +85,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="132" column="12" selection-start-line="132" selection-start-column="12" selection-end-line="132" selection-end-column="12" />
+            <state relative-caret-position="403">
+              <caret line="153" column="70" selection-start-line="153" selection-start-column="70" selection-end-line="153" selection-end-column="70" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#makeCountMatrix#0;class#MEME#0" />
+                <element signature="e#2180#2181#0" expanded="true" />
+                <element signature="e#2205#2206#0" expanded="true" />
                 <element signature="method#filterDNASequence#0;class#MEME#0" />
-                <element signature="class#FourTuple#0;class#MEME#0" />
+                <element signature="method#addSequence#0;class#CountMatrix#0;class#MEME#0" />
                 <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
                 <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
                 <element signature="method#add#0;class#FourTuple#0;class#MEME#0" />
                 <element signature="method#addBase#0;class#FourTuple#0;class#MEME#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/hw1/LocalSeqAlign.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="220" selection-start-line="220" selection-end-line="231" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#printScoreTable#0;class#LocalSeqAlign#0" />
-                <element signature="method#printAlignment#0;class#LocalSeqAlign#0" />
-                <element signature="method#calculatePValue#0;class#LocalSeqAlign#0" />
-                <element signature="method#performComparisonAnalysis#0;class#LocalSeqAlign#0" />
               </folding>
             </state>
           </provider>
@@ -135,8 +120,8 @@
       <find>System.out.println(</find>
       <find>i</find>
       <find>inputiterator</find>
-      <find>filterPro</find>
       <find>countma</find>
+      <find>filterPro</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -227,7 +212,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544497740128" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544498215969" />
     <property name="last_opened_file_path" value="$USER_HOME$/git/cse331-18au-yuval" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -380,7 +365,16 @@
           <properties />
           <option name="timeStamp" value="27" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/hw4/MEME.java</url>
+          <line>37</line>
+          <properties />
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
       </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
     </breakpoint-manager>
   </component>
   <component name="debuggerHistoryManager">
@@ -512,6 +506,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/jre/lib/rt.jar!/java/lang/Object.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+          <folding>
+            <element signature="e#487#488#0" expanded="true" />
+            <element signature="e#580#581#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/hw1/LocalSeqAlign.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -528,13 +533,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="132" column="12" selection-start-line="132" selection-start-column="12" selection-end-line="132" selection-end-column="12" />
+        <state relative-caret-position="403">
+          <caret line="153" column="70" selection-start-line="153" selection-start-column="70" selection-end-line="153" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#makeCountMatrix#0;class#MEME#0" />
+            <element signature="e#2180#2181#0" expanded="true" />
+            <element signature="e#2205#2206#0" expanded="true" />
             <element signature="method#filterDNASequence#0;class#MEME#0" />
-            <element signature="class#FourTuple#0;class#MEME#0" />
+            <element signature="method#addSequence#0;class#CountMatrix#0;class#MEME#0" />
             <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
             <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
             <element signature="method#add#0;class#FourTuple#0;class#MEME#0" />

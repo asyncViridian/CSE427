@@ -101,21 +101,17 @@ public class MEME {
 
 
     public static class FourMatrix {
-        /**
-         * Maps a sequence name to its base oldCounts
-         */
-        public Map<String, FourTuple> oldCounts;
 
         /**
          * List of nucleotide counts for each position where
          * counts.get(i) = counts over all included sequences for position i
          */
-        public List<FourTuple> counts;
+        private List<FourTuple> counts;
 
         /**
          * List of proteins included in the count
          */
-        public List<String> proteins;
+        private List<String> proteins;
 
         public FourMatrix() {
             this.counts = new ArrayList<>();
@@ -151,10 +147,11 @@ public class MEME {
          * @return sum of this and vector
          */
         public FourMatrix addVector(FourTuple vector) {
-            // TODO fix
             FourMatrix result = new FourMatrix();
-            for (String line : this.oldCounts.keySet()) {
-                result.oldCounts.put(line, this.oldCounts.get(line).add(vector));
+            for (int i = 0; i < this.counts.size(); i++) {
+                result.counts.add(new FourTuple());
+                result.counts.set(i, result.counts.get(i).add(this.counts.get(i)));
+                result.counts.set(i, result.counts.get(i).add(vector));
             }
             return result;
         }
@@ -242,6 +239,11 @@ public class MEME {
             } else if (base == 'T') {
                 this.a[3]++;
             }
+        }
+
+        @Override
+        public String toString() {
+            return "(" + this.a[0] + "," + this.a[1] + "," + this.a[2] + "," + this.a[3] + ")";
         }
     }
 }
