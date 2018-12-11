@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47536c5e-73d3-458a-ada4-52f077e3be4d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/hw4/MEME.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw3/GCPatchFinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/bin/hw3/GCPatchFinder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/hw3/temp.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw3/GCPatchFinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/hw4/MEME.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw4/MEME.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -55,12 +51,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="44" />
-          <entry key="java" value="18534" />
+          <entry key="java" value="19365" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="18534" />
+          <entry key="JAVA" value="19365" />
           <entry key="PLAIN_TEXT" value="44" />
         </counts>
       </usages-collector>
@@ -89,18 +85,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+            <state relative-caret-position="115">
+              <caret line="34" column="15" selection-start-line="34" selection-start-column="15" selection-end-line="34" selection-end-column="15" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#makeCountMatrix#0;class#MEME#0" />
                 <element signature="method#filterDNASequence#0;class#MEME#0" />
-                <element signature="class#CountMatrix#0;class#MEME#0" />
                 <element signature="e#3058#3059#0" expanded="true" />
                 <element signature="e#3111#3112#0" expanded="true" />
                 <element signature="class#FourTuple#0;class#MEME#0" />
                 <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
                 <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
+                <element signature="method#add#0;class#FourTuple#0;class#MEME#0" />
               </folding>
             </state>
           </provider>
@@ -231,7 +227,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544496123529" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544496542651" />
     <property name="last_opened_file_path" value="$USER_HOME$/git/cse331-18au-yuval" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -338,8 +334,8 @@
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49943376" visible="true" weight="0.21267454" />
-      <window_info id="Structure" order="1" sideWeight="0.50056624" side_tool="true" visible="true" weight="0.21267454" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49898168" visible="true" weight="0.21267454" />
+      <window_info id="Structure" order="1" sideWeight="0.50101835" side_tool="true" visible="true" weight="0.21267454" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -348,7 +344,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295583" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.605889" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.44394112" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.44394112" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295583" />
@@ -383,6 +379,12 @@
           <line>137</line>
           <properties />
           <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/hw4/MEME.java</url>
+          <line>39</line>
+          <properties />
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -532,18 +534,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+        <state relative-caret-position="115">
+          <caret line="34" column="15" selection-start-line="34" selection-start-column="15" selection-end-line="34" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#makeCountMatrix#0;class#MEME#0" />
             <element signature="method#filterDNASequence#0;class#MEME#0" />
-            <element signature="class#CountMatrix#0;class#MEME#0" />
             <element signature="e#3058#3059#0" expanded="true" />
             <element signature="e#3111#3112#0" expanded="true" />
             <element signature="class#FourTuple#0;class#MEME#0" />
             <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
             <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
+            <element signature="method#add#0;class#FourTuple#0;class#MEME#0" />
           </folding>
         </state>
       </provider>
