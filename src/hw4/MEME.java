@@ -31,15 +31,29 @@ public class MEME {
         proteins.put(proteinName, proteinContent);
         listNames.add(proteinName);
 
-        // Generate "background" frequency
+        // Generate background frequency
         FourTuple background = new FourTuple(1).frequencyNormalize();
+        // Generate pseudocount frequency
+        FourTuple pseudocount = new FourTuple(1).frequencyNormalize();
+        // Initialize motif width
+        int motifWidth = 10;
+
+        // Get seed subsequences (EM Initialization)
+        List<String> seed = new ArrayList<>();
+        String firstSeqName = listNames.get(0);
+        String firstSeq = proteins.get(firstSeqName);
+        for (int i = 0; i + motifWidth < firstSeq.length() - 1; i += motifWidth / 2) {
+            seed.add(firstSeq.substring(i, i + motifWidth));
+        }
+        seed.add(firstSeq.substring(firstSeq.length() - motifWidth));
 
         // TODO test each method
-        FourMatrix mx = makeCountMatrix(listNames, proteins);
-        FourTuple ps = new FourTuple(3);
-        mx = addPseudo(mx, ps);
-        FourMatrix fmx = makeFrequencyMatrix(mx);
-        FourMatrix wmmmx = makeWMM(fmx, background, ps);
+//        FourMatrix mx = makeCountMatrix(listNames, proteins);
+//        FourTuple ps = new FourTuple(3);
+//        mx = addPseudo(mx, ps);
+//        FourMatrix fmx = makeFrequencyMatrix(mx);
+//        FourMatrix wmmmx = makeWMM(fmx, background, ps);
+//        scanWMM(wmmmx, new ArrayList<String>());
     }
 
     /**
@@ -90,11 +104,38 @@ public class MEME {
         return frequencyMatrix.wmmScale(background, pseudocounts);
     }
 
-    public static void scanWMM(List<String> seqs) {
-        // TODO
+    /**
+     * Scores a list of given sequences using the given WMM
+     *
+     * @param WMMMatrix WMM to score with
+     * @param seqs      list of sequences to score along
+     * @return a map from DNA sequence to list of scores
+     * (the score at index i = score of sequence of length k beginning at index i of dna sequence)
+     */
+    public static Map<String, List<Double>> scanWMM(FourMatrix WMMMatrix, List<String> seqs) {
+        Map<String, List<Double>> scores = new HashMap<>();
+        for (String seq : seqs) {
+            scores.put(seq, scanSequence(WMMMatrix, seq));
+        }
+        return scores;
     }
 
-    public static void EStep() {
+    /**
+     * Returns a list of scores for a single sequence of equal or longer length than the WMM
+     *
+     * @param WMMMatrix WMM to score on
+     * @param seq       sequence to score
+     * @return list of scores where get(i) = score of subsequence beginning at index i
+     */
+    private static List<Double> scanSequence(FourMatrix WMMMatrix, String seq) {
+        List<Double> scores = new ArrayList<Double>();
+        for (int i = 0; i < seq.length() - WMMMatrix.length() + 1; i++) {
+            scores.add(WMMMatrix.score(seq.substring(i, i + WMMMatrix.length())));
+        }
+        return scores;
+    }
+
+    public static void EStep(FourMatrix WMMMatrix, List<String> seqs) {
         // TODO
     }
 
@@ -224,6 +265,31 @@ public class MEME {
 
             return result;
         }
+
+        /**
+         * Returns a score for this WMM on a single sequence (matching length)
+         *
+         * @param sequence DNA sequence with the exact same length as this WMM
+         * @return score of that sequence on this WMM
+         */
+        public double score(String sequence) {
+            if (this.length() != sequence.length()) {
+                throw new RuntimeException("Sequence length != WMM length");
+            }
+
+            double score = 0;
+            for (int i = 0; i < sequence.length(); i++) {
+                score += this.counts.get(i).getBase(sequence.charAt(i));
+            }
+            return score;
+        }
+
+        /**
+         * @return the length of the sequences this matrix encodes
+         */
+        public int length() {
+            return this.counts.size();
+        }
     }
 
 
@@ -306,6 +372,24 @@ public class MEME {
                 this.a[2]++;
             } else if (base == 'T') {
                 this.a[3]++;
+            }
+        }
+
+        /**
+         * Returns the number associated with a specific base
+         *
+         * @param base DNA base in standard form
+         * @return double associated with that base in this vector
+         */
+        public double getBase(char base) {
+            if (base == 'A') {
+                return this.a[0];
+            } else if (base == 'C') {
+                return this.a[1];
+            } else if (base == 'G') {
+                return this.a[2];
+            } else { // if (base == 'T')
+                return this.a[3];
             }
         }
 
