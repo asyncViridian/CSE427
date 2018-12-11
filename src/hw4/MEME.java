@@ -38,7 +38,8 @@ public class MEME {
         FourMatrix mx = makeCountMatrix(listNames, proteins);
         FourTuple ps = new FourTuple(3);
         mx = addPseudo(mx, ps);
-        mx = makeFrequencyMatrix(mx);
+        FourMatrix fmx = makeFrequencyMatrix(mx);
+        FourMatrix wmmmx = makeWMM(fmx, background, ps);
     }
 
     /**
@@ -77,13 +78,16 @@ public class MEME {
         return countMatrix.convertToFrequency();
     }
 
-    public static double entropy(FourMatrix frequencyMatrix, FourTuple background) {
-        // TODO
-        return 0;
-    }
-
-    public static void makeWMM(FourMatrix frequencyMatrix, FourTuple background) {
-        // TODO
+    /**
+     * Computes a weight matrix (and associated relative entropy) given a frequency matrix and background distribution
+     *
+     * @param frequencyMatrix frequency matrix to use
+     * @param background      background distribution
+     * @param pseudocounts    pseudocount parameter
+     * @return WM for given params with relative entropy value
+     */
+    public static FourMatrix makeWMM(FourMatrix frequencyMatrix, FourTuple background, FourTuple pseudocounts) {
+        return frequencyMatrix.wmmScale(background, pseudocounts);
     }
 
     public static void scanWMM(List<String> seqs) {
@@ -135,6 +139,12 @@ public class MEME {
          * List of proteins included in the count
          */
         private List<String> proteins;
+
+        /**
+         * -1 if this matrix has no appropriate entropy value associated,
+         * positive value if it does (and if so, equals the relative entropy value)
+         */
+        public double entropy = -1;
 
         public FourMatrix() {
             this.counts = new ArrayList<>();
@@ -189,6 +199,29 @@ public class MEME {
             for (int i = 0; i < this.counts.size(); i++) {
                 result.counts.add(this.counts.get(i).frequencyNormalize());
             }
+            return result;
+        }
+
+        /**
+         * Return a WMM(this frequency matrix) given background frequency and pseudocounts
+         *
+         * @param background background frequency
+         * @param pseudo     pseudocount to use
+         * @return WMM(this)
+         */
+        public FourMatrix wmmScale(FourTuple background, FourTuple pseudo) {
+            // calculate WM values
+            FourMatrix result = new FourMatrix();
+            for (int i = 0; i < this.counts.size(); i++) {
+                result.counts.add(this.counts.get(i).wmmScale(background, pseudo));
+            }
+
+            // calculate relative entropy
+            this.entropy = 0;
+            for (int i = 0; i < result.counts.size(); i++) {
+                entropy += this.counts.get(i).indivEntropy(result.counts.get(i));
+            }
+
             return result;
         }
     }
@@ -285,10 +318,40 @@ public class MEME {
         public FourTuple frequencyNormalize() {
             double sum = this.a[0] + this.a[1] + this.a[2] + this.a[3];
             FourTuple result = new FourTuple();
-            result.a[0] = this.a[0] / sum;
-            result.a[1] = this.a[1] / sum;
-            result.a[2] = this.a[2] / sum;
-            result.a[3] = this.a[3] / sum;
+            for (int i = 0; i < 4; i++) {
+                result.a[i] = this.a[i] / sum;
+            }
+            return result;
+        }
+
+        /**
+         * Return a vector scaled wmm-style
+         *
+         * @param background background frequencies
+         * @param pseudo     pseudocount vector
+         * @return WMM-scaled vector
+         */
+        public FourTuple wmmScale(FourTuple background, FourTuple pseudo) {
+            FourTuple mod = this.add(pseudo);
+            FourTuple result = new FourTuple();
+            for (int i = 0; i < 4; i++) {
+                // Calculate log2((actual+pseudo)/background) in each cell
+                result.a[i] = Math.log(mod.a[i] / background.a[i]) / Math.log(2);
+            }
+            return result;
+        }
+
+        /**
+         * Calculate relative entropy for an individual column
+         *
+         * @param frequency frequency of each base
+         * @return relative entropy of this individual base coord
+         */
+        public double indivEntropy(FourTuple frequency) {
+            double result = 0;
+            for (int i = 0; i < 4; i++) {
+                result += this.a[i] * frequency.a[i];
+            }
             return result;
         }
 
