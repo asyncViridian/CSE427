@@ -1,6 +1,5 @@
 package hw4;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.*;
 
@@ -34,7 +33,7 @@ public class MEME {
 
         // TODO
         // Create original count matrix
-        CountMatrix mx = makeCountMatrix(listNames, proteins);
+        FourMatrix mx = makeCountMatrix(listNames, proteins);
         FourTuple ps = new FourTuple(3);
         mx = addPseudo(mx, ps);
     }
@@ -44,10 +43,10 @@ public class MEME {
      *
      * @param listNames names of proteins to include
      * @param proteins  mapping of name to sequence
-     * @return CountMatrix of given proteins
+     * @return FourMatrix of given proteins
      */
-    public static CountMatrix makeCountMatrix(List<String> listNames, Map<String, String> proteins) {
-        CountMatrix mx = new CountMatrix();
+    public static FourMatrix makeCountMatrix(List<String> listNames, Map<String, String> proteins) {
+        FourMatrix mx = new FourMatrix();
         for (String seqName : listNames) {
             mx.addSequence(seqName, proteins.get(seqName));
         }
@@ -57,12 +56,23 @@ public class MEME {
     /**
      * Returns the sum of mx and pseudo (pseudo added to each line of mx)
      *
-     * @param mx     CountMatrix to add to
+     * @param mx     count matrix to add to
      * @param pseudo pseudocount vector to add
      * @return sum of mx and pseudo
      */
-    public static CountMatrix addPseudo(CountMatrix mx, FourTuple pseudo) {
+    public static FourMatrix addPseudo(FourMatrix mx, FourTuple pseudo) {
         return mx.addVector(pseudo);
+    }
+
+    /**
+     * Generate a frequency matrix from a count matrix.
+     *
+     * @param countMatrix count matrix to use
+     * @return frequency matrix (each coord = fraction of sequences that this nucleotide is here at this position)
+     */
+    public static FourMatrix makeFrequencyMatrix(FourMatrix countMatrix) {
+        // TODO
+        return null;
     }
 
     /**
@@ -90,14 +100,26 @@ public class MEME {
     }
 
 
-    public static class CountMatrix {
+    public static class FourMatrix {
         /**
-         * Maps a sequence name to its base counts
+         * Maps a sequence name to its base oldCounts
          */
-        public Map<String, FourTuple> counts;
+        public Map<String, FourTuple> oldCounts;
 
-        public CountMatrix() {
-            this.counts = new HashMap<>();
+        /**
+         * List of nucleotide counts for each position where
+         * counts.get(i) = counts over all included sequences for position i
+         */
+        public List<FourTuple> counts;
+
+        /**
+         * List of proteins included in the count
+         */
+        public List<String> proteins;
+
+        public FourMatrix() {
+            this.counts = new ArrayList<>();
+            this.proteins = new ArrayList<>();
         }
 
         /**
@@ -107,8 +129,19 @@ public class MEME {
          * @param seq     sequence to add
          */
         public void addSequence(String seqName, String seq) {
-            FourTuple tup = new FourTuple(seq);
-            this.counts.put(seqName, tup);
+            this.proteins.add(seqName);
+
+            for (int i = 0; i < seq.length(); i++) {
+                if (counts.size() <= i) {
+                    // Haven't already added this position
+                    FourTuple count = new FourTuple();
+                    count.addBase(seq.charAt(i));
+                    counts.add(count);
+                } else {
+                    // Have already had this position before: increment
+                    counts.get(i).addBase(seq.charAt(i));
+                }
+            }
         }
 
         /**
@@ -117,10 +150,11 @@ public class MEME {
          * @param vector pseudocount vector to add
          * @return sum of this and vector
          */
-        public CountMatrix addVector(FourTuple vector) {
-            CountMatrix result = new CountMatrix();
-            for (String line : this.counts.keySet()) {
-                result.counts.put(line, this.counts.get(line).add(vector));
+        public FourMatrix addVector(FourTuple vector) {
+            // TODO fix
+            FourMatrix result = new FourMatrix();
+            for (String line : this.oldCounts.keySet()) {
+                result.oldCounts.put(line, this.oldCounts.get(line).add(vector));
             }
             return result;
         }
@@ -156,7 +190,7 @@ public class MEME {
         }
 
         /**
-         * Generate a FourTuple containing counts of all DNA bases
+         * Generate a FourTuple containing oldCounts of all DNA bases
          *
          * @param seq DNA sequencne to add
          */
@@ -190,6 +224,24 @@ public class MEME {
             result.a[2] = this.a[2] + other.a[2];
             result.a[3] = this.a[3] + other.a[3];
             return result;
+        }
+
+        /**
+         * Increments the position associated with the given base
+         * (if base is nonstandard, does nothing)
+         *
+         * @param base DNA base in standardized form
+         */
+        public void addBase(char base) {
+            if (base == 'A') {
+                this.a[0]++;
+            } else if (base == 'C') {
+                this.a[1]++;
+            } else if (base == 'G') {
+                this.a[2]++;
+            } else if (base == 'T') {
+                this.a[3]++;
+            }
         }
     }
 }
