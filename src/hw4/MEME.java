@@ -1,5 +1,10 @@
 package hw4;
 
+// Joyce Zhou
+// 1670289
+
+import javafx.util.Pair;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,6 +77,8 @@ public class MEME {
             WMMSeeds.add(resultWMM);
             entropies.get(i).add(resultWMM.entropy);
         }
+
+        // TODO there is a bug in the E-M algos somewhere, but not sure where exactly
 
         // For each of the S seed WMMs, run three E/M step pairs
         List<FourMatrix> WMMResults = new ArrayList<>();
@@ -171,26 +178,33 @@ public class MEME {
         System.out.println("Frequency matrix for B:\n" + B.freqMatrix);
         System.out.println("Frequency matrix for C:\n" + C.freqMatrix);
         System.out.println("Frequency matrix for S:\n" + S.freqMatrix);
-        System.out.println();
 
         // Generate histograms
-        System.out.println("Max c(j) for A: " + generateHistogram(A, "A", DNASequences));
-        System.out.println("Max c(j) for B: " + generateHistogram(B, "B", DNASequences));
-        System.out.println("Max c(j) for C: " + generateHistogram(C, "C", DNASequences));
-        System.out.println("Max c(j) for S: " + generateHistogram(S, "S", DNASequences));
+        int mA = generateHistogram(A, "A", DNASequences);
+        int mB = generateHistogram(B, "B", DNASequences);
+        int mC = generateHistogram(C, "C", DNASequences);
+        int mS = generateHistogram(S, "S", DNASequences);
+        System.out.println("Location of max c(j) for A: " + mA);
+        System.out.println("Location of max c(j) for B: " + mB);
+        System.out.println("Location of max c(j) for C: " + mC);
+        System.out.println("Location of max c(j) for S: " + mS);
+        System.out.println();
 
-        // TODO
+        // Do ROC stuff
+        FourMatrix[] wmms = {A, B, C, S};
+        generateROC(wmms, DNASequences);
     }
 
     /**
      * Creates a histogram of top hits for the given WMM. Also returns the most likely motif starting position.
+     *
      * @param WMMMatrix WMM to use
-     * @param filename filename to save the histogram under (filename.png)
-     * @param seqs sequences to use
+     * @param filename  filename to save the histogram under (filename.png)
+     * @param seqs      sequences to use
      * @return the most likely motif starting index
      */
     public static int generateHistogram(FourMatrix WMMMatrix, String filename, List<String> seqs) {
-        filename = filename + ".png";
+        filename = "histogram_" + filename + ".png";
 
         // Generate scores data
         Map<String, List<Double>> scores = scanWMM(WMMMatrix, seqs);
@@ -275,7 +289,166 @@ public class MEME {
         return maxIndex;
     }
 
-    private static int scale(int vL, int vH, int v, int L, int H) {
+    public static void generateROC(FourMatrix[] WMMMatrix, List<String> seqs) {
+        if (WMMMatrix.length != 4) {
+            throw new IllegalArgumentException("array of WMMs doesnt contain exactly 4");
+        }
+
+        String filename = "ROC.png";
+
+        Double[] fullTau = new Double[4]; // {A,B,C,S}
+        Color[] colors = {Color.BLUE, Color.ORANGE, Color.GREEN, Color.RED};
+
+        // draw image:
+        BufferedImage image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = image.getGraphics();
+        // draw axes and boring background stuff
+        g.setColor(Color.BLACK);
+        g.drawLine(15, 20, 780, 20);
+        g.drawString("1", 10, 25);
+        g.drawLine(15, 580, 780, 580);
+        g.drawString("0", 10, 585);
+        g.drawLine(20, 20, 20, 585);
+        g.drawString("0", 20, 595);
+        g.drawLine(780, 20, 780, 585);
+        g.drawString("1", 780, 595);
+        g.setColor(Color.LIGHT_GRAY);
+        g.drawLine(20, 580, 780, 20);
+        g.drawString("TPR", 5, 300);
+        g.drawString("FPR", 400, 595);
+        // draw curves and associated AUC
+        fullTau[0] = drawROC(g, colors[0], "A", WMMMatrix[0], seqs, 600, 520, false);
+        fullTau[1] = drawROC(g, colors[1], "B", WMMMatrix[1], seqs, 600, 535, false);
+        fullTau[2] = drawROC(g, colors[2], "C", WMMMatrix[2], seqs, 600, 550, true);
+        fullTau[3] = drawROC(g, colors[3], "S", WMMMatrix[3], seqs, 600, 565, false);
+        File outputFile = new File(filename);
+
+        try {
+            ImageIO.write(image, "png", outputFile);
+        } catch (IOException e) {
+            System.err.println("Unable to generate file " + filename);
+        }
+    }
+
+    private static Double drawROC(Graphics g, Color c, String name, FourMatrix WMMMatrix, List<String> seqs,
+                                  int aucX, int aucY, boolean printStats) {
+        // Generate scores data
+        Map<String, List<Double>> scores = scanWMM(WMMMatrix, seqs);
+        // Initialize list of "true" motif indexes
+        // (motifs.get(i) = index of motif in seqs.get(i))
+        List<Integer> motifs = new ArrayList<>();
+        // Find the maximum score in each
+        for (String seq : seqs) {
+            List<Double> s = scores.get(seq);
+            int maxIndex = 0;
+            Double max = s.get(0);
+            for (int i = 0; i < s.size(); i++) {
+                if (s.get(i) - max > 0) {
+                    maxIndex = i;
+                    max = s.get(i);
+                }
+            }
+
+            // And increment histogram
+            motifs.add(maxIndex);
+        }
+
+        // Generate mapping from score to true-falseness
+        List<Pair<Double, Boolean>> annotated = new ArrayList<>();
+        int totalPos = 0;
+        int totalNeg = 0;
+        for (int i = 0; i < seqs.size(); i++) {
+            String seq = seqs.get(i);
+            for (int j = 0; j < scores.get(seq).size(); j++) {
+                if (motifs.get(i).equals(j)) {
+                    // If the motif in this sequence = current reading index
+                    annotated.add(new Pair<>(scores.get(seq).get(j), Boolean.TRUE));
+                    totalPos++;
+                } else {
+                    annotated.add(new Pair<>(scores.get(seq).get(j), Boolean.FALSE));
+                    totalNeg++;
+                }
+            }
+        }
+        annotated.sort(new Comparator<Pair<Double, Boolean>>() {
+            @Override
+            public int compare(Pair<Double, Boolean> a, Pair<Double, Boolean> b) {
+                return Double.compare(a.getKey(), b.getKey());
+            }
+        });
+
+        // Find the minimum tau that hits at least all true positives?
+        int minTauIndex = 0;
+        while (annotated.get(minTauIndex).getValue().equals(Boolean.FALSE)) {
+            minTauIndex++;
+        }
+        Double minTau = annotated.get(minTauIndex).getKey();
+
+        // draw ROC with graphics object
+        g.setColor(c);
+        double auc = 0;
+        int tp = 0;
+        int fp = 0;
+        int tn = totalNeg;
+        int fn = totalPos;
+        Pair<Float, Float> prev = new Pair<>(0f, 0f);
+        float leftAnchor = 0;
+        for (int i = annotated.size() - 1; i >= 0; i--) {
+            Pair<Double, Boolean> atau = annotated.get(i);
+
+            // Adjust our counts of each true/false pos/neg etc.
+            if (atau.getValue()) {
+                tp++;
+                fn--;
+            } else {
+                fp++;
+                tn--;
+            }
+            float tpr = 1f * tp / totalPos;
+            float fpr = 1f * fp / totalNeg;
+
+            // Also calculate AUC
+            if (!atau.getValue()) {
+                // if fpr increased, add to the area & set anchor
+                auc += (fpr - leftAnchor) * tpr;
+                leftAnchor = fpr;
+
+            }
+
+            // Draw the line!
+            g.drawLine(scale(0, 1, prev.getKey(), 20, 780),
+                    600 - scale(0, 1, prev.getValue(), 20, 580),
+                    scale(0, 1, fpr, 20, 780),
+                    600 - scale(0, 1, tpr, 20, 580));
+            prev = new Pair<>(fpr, tpr);
+
+
+            // Print stuff that we want to print
+            if (printStats && atau.getKey().equals(minTau)) {
+                System.out.println("For WMM C:");
+                System.out.println("tau: " + atau.getKey());
+                System.out.println(" TP: " + tp);
+                System.out.println(" FP: " + fp);
+                System.out.println(" TN: " + tn);
+                System.out.println(" FN: " + fn);
+                System.out.println("TPR: " + tpr);
+                System.out.println("FPR: " + fpr);
+                printStats = false;
+            }
+        }
+        // Fenceposting
+        g.drawLine(scale(0, 1, prev.getKey(), 20, 580),
+                scale(0, 1, prev.getValue(), 20, 780),
+                scale(0, 1, 1, 20, 580),
+                scale(0, 1, 1, 20, 780));
+
+        // calculate and print AC
+        g.drawString(name + " WMM AUC: " + auc, aucX, aucY);
+
+        return minTau;
+    }
+
+    private static int scale(float vL, float vH, float v, float L, float H) {
         return Math.round((1f * (v - vL) / (vH - vL)) * (H - L) + L);
     }
 
