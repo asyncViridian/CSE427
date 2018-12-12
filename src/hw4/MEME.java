@@ -167,6 +167,9 @@ public class MEME {
         System.out.println("Frequency matrix for B:\n" + B.freqMatrix);
         System.out.println("Frequency matrix for C:\n" + C.freqMatrix);
         System.out.println("Frequency matrix for S:\n" + S.freqMatrix);
+
+        // Generate histograms
+        // TODO
     }
 
     /**

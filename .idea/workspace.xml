@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47536c5e-73d3-458a-ada4-52f077e3be4d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME$FourMatrix.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME$FourTuple.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/hw4/MEME.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw4/MEME.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
@@ -54,12 +51,12 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="44" />
-          <entry key="java" value="31400" />
+          <entry key="java" value="31483" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="31400" />
+          <entry key="JAVA" value="31483" />
           <entry key="PLAIN_TEXT" value="44" />
         </counts>
       </usages-collector>
@@ -88,8 +85,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="220" column="44" selection-start-line="220" selection-start-column="44" selection-end-line="220" selection-end-column="44" />
+            <state relative-caret-position="84">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3796#3797#0" expanded="true" />
@@ -235,9 +232,9 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544575218015" />
-    <property name="last_opened_file_path" value="$USER_HOME$/git/cse331-18au-yuval" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544578664261" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/jfreechart-1.0.19" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
@@ -387,36 +384,6 @@
           <line>137</line>
           <properties />
           <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/hw4/MEME.java</url>
-          <line>92</line>
-          <properties />
-          <option name="timeStamp" value="83" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/hw4/MEME.java</url>
-          <line>76</line>
-          <properties />
-          <option name="timeStamp" value="88" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/hw4/MEME.java</url>
-          <line>285</line>
-          <properties />
-          <option name="timeStamp" value="97" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/hw4/MEME.java</url>
-          <line>307</line>
-          <properties />
-          <option name="timeStamp" value="98" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/hw4/MEME.java</url>
-          <line>187</line>
-          <properties />
-          <option name="timeStamp" value="99" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -590,8 +557,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="220" column="44" selection-start-line="220" selection-start-column="44" selection-end-line="220" selection-end-column="44" />
+        <state relative-caret-position="84">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3796#3797#0" expanded="true" />
