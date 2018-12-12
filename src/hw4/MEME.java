@@ -5,70 +5,185 @@ import java.util.*;
 
 public class MEME {
     public static void main(String[] args) throws IOException {
-        // Read sequence inputs (FASTA) from console
-        Map<String, String> proteins = new HashMap<>(); // Maps names to seqs
-        List<String> listNames = new ArrayList<>(); // List of all protein names
+        // Read sequence inputs (FASTA, DNA) from console
+        List<String> DNASequences = new ArrayList<>(); // Maps names to seqs
         Scanner console = new Scanner(System.in);
         String line = console.nextLine();
-        String proteinName = line;
-        String proteinContent = "";
+        String DNAcontent = "";
         // Get the first protein
         while (console.hasNextLine()) {
             line = console.nextLine();
             if (line.length() > 0 && line.charAt(0) == '>') {
                 // Beginning of a new protein entry
-                proteins.put(proteinName, proteinContent);
-                listNames.add(proteinName);
-                proteinName = line;
-                proteinContent = "";
+                DNASequences.add(DNAcontent);
+                DNAcontent = "";
             } else {
                 // Continuation of a protein
-                proteinContent = proteinContent + filterDNASequence(line);
+                DNAcontent = DNAcontent + filterDNASequence(line);
 
             }
         }
         // Close the last protein
-        proteins.put(proteinName, proteinContent);
-        listNames.add(proteinName);
+        DNASequences.add(DNAcontent);
 
         // Generate background frequency
         FourTuple background = new FourTuple(0.25);
         // Generate pseudocount frequency
-        FourTuple pseudocount = new FourTuple(0.25);
+        FourTuple pseudocounts = new FourTuple(0.25);
+        // Get seed pseudocount frequency (this is a special case!
+        FourTuple seedPseudocount = new FourTuple(0.15 / ((4 * 0.85) - 1));
         // Initialize motif width
         int motifWidth = 10;
 
         // Get seed subsequences (EM Initialization!)
-        List<String> seed = new ArrayList<>();
-        String firstSeqName = listNames.get(0);
-        String firstSeq = proteins.get(firstSeqName);
-        for (int i = 0; i + motifWidth < firstSeq.length() - 1; i += motifWidth / 2) {
-            seed.add(firstSeq.substring(i, i + motifWidth));
+        List<String> seeds = new ArrayList<>();
+        String firstSeq = DNASequences.get(0);
+        for (int i = 0; i + motifWidth < firstSeq.length(); i += motifWidth / 2) {
+            seeds.add(firstSeq.substring(i, i + motifWidth));
         }
-        seed.add(firstSeq.substring(firstSeq.length() - motifWidth));
-        // Get seed pseudocount
-        FourTuple seedPseudocount = new FourTuple(0.85 * seed.size() / 1.85);
+        seeds.add(firstSeq.substring(firstSeq.length() - motifWidth));
 
-        // TODO add more stuff below
-//        FourMatrix mx = makeCountMatrix(listNames, proteins);
-//        FourTuple ps = new FourTuple(3);
-//        mx = addPseudo(mx, ps);
-//        FourMatrix fmx = makeFrequencyMatrix(mx);
-//        FourMatrix wmmmx = makeWMM(fmx, background, ps);
-//        scanWMM(wmmmx, new ArrayList<String>());
+
+        // Collect entropy data
+        List<List<Double>> entropies = new ArrayList<>();
+
+        // Initialize WMMs for each of the S seed WMMs
+        List<FourMatrix> WMMSeeds = new ArrayList<>();
+        for (int i = 0; i < seeds.size(); i++) {
+            entropies.add(new ArrayList<Double>());
+
+            String seed = seeds.get(i);
+
+            // Initialize some stuff
+            List<String> subseqs = new ArrayList<>();
+            subseqs.add(seed);
+            List<Double> weights = new ArrayList<>();
+            weights.add(1.0);
+            // Create the WMMs
+            FourMatrix countMatrix = makeCountMatrix(subseqs, weights);
+            FourMatrix totalCounts = addPseudo(countMatrix, seedPseudocount);
+            FourMatrix frequencyMatrix = makeFrequencyMatrix(totalCounts);
+            FourMatrix resultWMM = makeWMM(frequencyMatrix, background);
+
+            WMMSeeds.add(resultWMM);
+            entropies.get(i).add(resultWMM.entropy);
+        }
+
+        // For each of the S seed WMMs, run three E/M step pairs
+        List<FourMatrix> WMMResults = new ArrayList<>();
+        for (int i = 0; i < WMMSeeds.size(); i++) {
+            FourMatrix WMMSeed = WMMSeeds.get(i);
+            // First pair
+            List<List<Double>> z = EStep(WMMSeed, DNASequences);
+            FourMatrix newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Second pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Third pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+
+            WMMResults.add(newWMM);
+        }
+
+        // Sort WMMs by relative entropy, lowest to highest
+        WMMResults.sort(new Comparator<FourMatrix>() {
+            @Override
+            public int compare(FourMatrix a, FourMatrix b) {
+                return Double.compare(a.entropy, b.entropy);
+            }
+        });
+
+        // Pick highest, median, lowest entropy WMM
+        FourMatrix A = WMMResults.get(WMMResults.size() - 1);
+        FourMatrix B = WMMResults.get(WMMResults.size() / 2);
+        FourMatrix C = WMMResults.get(0);
+
+        // Run 7 more E/M step pairs
+        // Incidentally, this code style is atrocious
+        List<FourMatrix> MoreWMMResults = new ArrayList<>();
+        for (int i = 0; i < WMMResults.size(); i++) {
+            FourMatrix WMM = WMMResults.get(i);
+
+            // First pair
+            List<List<Double>> z = EStep(WMM, DNASequences);
+            FourMatrix newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Second pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Third pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Fourth pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Fifth pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Sixth pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+            // Seventh pair
+            z = EStep(newWMM, DNASequences);
+            newWMM = MStep(z, DNASequences, motifWidth, background, pseudocounts);
+            entropies.get(i).add(newWMM.entropy);
+
+            MoreWMMResults.add(newWMM);
+        }
+
+        // Sort second-round WMMs by relative entropy, lowest to highest
+        MoreWMMResults.sort(new Comparator<FourMatrix>() {
+            @Override
+            public int compare(FourMatrix a, FourMatrix b) {
+                return Double.compare(a.entropy, b.entropy);
+            }
+        });
+
+        // Get the best of the second-round WMMs
+        FourMatrix S = MoreWMMResults.get(WMMResults.size() - 1);
+
+        // Print out entropies
+        System.out.println("Entropy matrix:");
+        for (int i = 0; i < entropies.size(); i++) {
+            String entropyLine = "";
+            for (int j = 0; j < entropies.get(i).size(); j++) {
+                entropyLine += String.format("%-8.3f ", entropies.get(i).get(j));
+            }
+            System.out.println(entropyLine);
+        }
+        System.out.println();
+
+        // Print out the top picks
+        System.out.println("Frequency matrix for A:\n" + A.freqMatrix);
+        System.out.println("Frequency matrix for B:\n" + B.freqMatrix);
+        System.out.println("Frequency matrix for C:\n" + C.freqMatrix);
+        System.out.println("Frequency matrix for S:\n" + S.freqMatrix);
     }
 
     /**
-     * Generates a count matrix given the list of protein names (and a name->sequence map)
+     * Generates a count matrix given the list of sequences (and a name->sequence map)
      *
-     * @param listNames names of proteins to include
-     * @param proteins  mapping of name to sequence
-     * @return FourMatrix of given proteins
+     * @param seqs    list of DNA sequences to include
+     * @param weights amount to weigh each given sequence by
+     * @return count matrix for given DNA sequences
      */
-    public static FourMatrix makeCountMatrix(List<String> listNames, Map<String, String> proteins) {
+    public static FourMatrix makeCountMatrix(List<String> seqs, List<Double> weights) {
+        if (seqs.size() != weights.size()) {
+            throw new IllegalArgumentException("seqs and weights have different lengths");
+        }
+
         FourMatrix mx = new FourMatrix();
-        for (String seqName : listNames) {
-            mx.addSequence(seqName, proteins.get(seqName));
+        for (int i = 0; i < seqs.size(); i++) {
+            mx.addSequence(seqs.get(i), weights.get(i));
         }
         return mx;
     }
@@ -99,11 +214,12 @@ public class MEME {
      *
      * @param frequencyMatrix frequency matrix to use
      * @param background      background distribution
-     * @param pseudocounts    pseudocount parameter
      * @return WM for given params with relative entropy value
      */
-    public static FourMatrix makeWMM(FourMatrix frequencyMatrix, FourTuple background, FourTuple pseudocounts) {
-        return frequencyMatrix.wmmScale(background, pseudocounts);
+    public static FourMatrix makeWMM(FourMatrix frequencyMatrix, FourTuple background) {
+        FourMatrix result = frequencyMatrix.wmmScale(background);
+        result.freqMatrix = frequencyMatrix;
+        return result;
     }
 
     /**
@@ -138,39 +254,61 @@ public class MEME {
     }
 
     /**
+     * MEME E-Step:
      * Calculate Z_ij (variable 1=motif in seq # 1 starts at position j, 0 = not)
      *
      * @param WMMMatrix WMM to use
      * @param seqs      sequences to calculate off of
      * @return List where list.get(i) gets variables for ith sequence, list.get(i).get(j) gets Z_ij
      */
-    public static List<List<Double>> EStep(FourMatrix WMMMatrix, List<String> seqs, Map<String, List<Double>> scannedScores) {
-        double sum = 0;
+    public static List<List<Double>> EStep(FourMatrix WMMMatrix, List<String> seqs) {
+        Map<String, List<Double>> scannedScores = scanWMM(WMMMatrix, seqs);
 
-        // Add all the probabilities (unscaled)
-        List<List<Double>> e = new ArrayList<>();
+        List<List<Double>> z = new ArrayList<>();
         for (String seq : seqs) {
+            // Add all the probabilities (unscaled)
+            double sum = 0;
             List<Double> seqList = new ArrayList<>();
             for (Double score : scannedScores.get(seq)) {
                 Double newValue = Math.pow(2, score);
                 seqList.add(newValue);
                 sum += newValue;
             }
-            e.add(seqList);
+
+            // Scale the probabilities so they sum to 1 for each sequence
+            for (int i = 0; i < seqList.size(); i++) {
+                seqList.set(i, seqList.get(i) / sum);
+            }
+
+            z.add(seqList);
         }
 
-        // Scale the probabilities so sum = 1
-        for (List<Double> seqdata : e) {
-            for (int i = 0; i < seqdata.size(); i++) {
-                seqdata.set(i, seqdata.get(i) / sum);
+        return z;
+    }
+
+    /**
+     * MEME M-Step
+     * Calculate best WMM given weighting of subsequences
+     *
+     * @param z    Weight of each subsequence
+     * @param seqs All input DNA sequences
+     */
+    public static FourMatrix MStep(List<List<Double>> z, List<String> seqs, int motifWidth, FourTuple background, FourTuple pseudocounts) {
+        List<String> subsequences = new ArrayList<>();
+        List<Double> weights = new ArrayList<>();
+        // Build up the list of subsequences and weights for each subsequence to input into makeCountMatrix
+        for (int i = 0; i < seqs.size(); i++) {
+            String seq = seqs.get(i);
+            for (int j = 0; j <= seq.length() - motifWidth; j++) {
+                subsequences.add(seq.substring(j, j + motifWidth));
+                weights.add(z.get(i).get(j));
             }
         }
 
-        return e;
-    }
-
-    public static void MStep() {
-        // TODO
+        FourMatrix countMatrix = makeCountMatrix(subsequences, weights);
+        FourMatrix totalCounts = addPseudo(countMatrix, pseudocounts);
+        FourMatrix frequencyMatrix = makeFrequencyMatrix(totalCounts);
+        return makeWMM(frequencyMatrix, background);
     }
 
     /**
@@ -207,39 +345,37 @@ public class MEME {
         private List<FourTuple> counts;
 
         /**
-         * List of proteins included in the count
-         */
-        private List<String> proteins;
-
-        /**
          * -1 if this matrix has no appropriate entropy value associated,
          * positive value if it does (and if so, equals the relative entropy value)
          */
         public double entropy = -1;
 
+        /**
+         * Null if this matrix has no appropriate frequency matrix associated,
+         * nonnull if it does (and if so, equals the frequency matrix)
+         */
+        public FourMatrix freqMatrix = null;
+
         public FourMatrix() {
             this.counts = new ArrayList<>();
-            this.proteins = new ArrayList<>();
         }
 
         /**
          * Adds a DNA sequence to the count matrix. If already there, replaces previous value.
          *
-         * @param seqName name of the sequence to add
-         * @param seq     sequence to add
+         * @param seq    sequence to add
+         * @param weight amount to weigh this sequence by
          */
-        public void addSequence(String seqName, String seq) {
-            this.proteins.add(seqName);
-
+        public void addSequence(String seq, Double weight) {
             for (int i = 0; i < seq.length(); i++) {
                 if (counts.size() <= i) {
                     // Haven't already added this position
                     FourTuple count = new FourTuple();
-                    count.addBase(seq.charAt(i));
+                    count.addBase(seq.charAt(i), weight);
                     counts.add(count);
                 } else {
                     // Have already had this position before: increment
-                    counts.get(i).addBase(seq.charAt(i));
+                    counts.get(i).addBase(seq.charAt(i), weight);
                 }
             }
         }
@@ -274,23 +410,23 @@ public class MEME {
         }
 
         /**
-         * Return a WMM(this frequency matrix) given background frequency and pseudocounts
+         * Return a WMM(this frequency matrix) given background frequency and pseudocounts.
+         * Also sets entropy value :)
          *
          * @param background background frequency
-         * @param pseudo     pseudocount to use
          * @return WMM(this)
          */
-        public FourMatrix wmmScale(FourTuple background, FourTuple pseudo) {
+        public FourMatrix wmmScale(FourTuple background) {
             // calculate WM values
             FourMatrix result = new FourMatrix();
             for (int i = 0; i < this.counts.size(); i++) {
-                result.counts.add(this.counts.get(i).wmmScale(background, pseudo));
+                result.counts.add(this.counts.get(i).wmmScale(background));
             }
 
             // calculate relative entropy
-            this.entropy = 0;
+            result.entropy = 0;
             for (int i = 0; i < result.counts.size(); i++) {
-                entropy += this.counts.get(i).indivEntropy(result.counts.get(i));
+                result.entropy += result.counts.get(i).indivEntropy(this.counts.get(i));
             }
 
             return result;
@@ -319,6 +455,20 @@ public class MEME {
          */
         public int length() {
             return this.counts.size();
+        }
+
+        @Override
+        public String toString() {
+            String result = String.format("%-8s %-8s %-8s %-8s\n",
+                    "A", "C", "G", "T");
+            for (int i = 0; i < this.length(); i++) {
+                result += String.format("%-8.3f %-8.3f %-8.3f %-8.3f\n",
+                        this.counts.get(i).a[0],
+                        this.counts.get(i).a[1],
+                        this.counts.get(i).a[2],
+                        this.counts.get(i).a[3]);
+            }
+            return result;
         }
     }
 
@@ -393,15 +543,15 @@ public class MEME {
          *
          * @param base DNA base in standardized form
          */
-        public void addBase(char base) {
+        public void addBase(char base, double weight) {
             if (base == 'A') {
-                this.a[0]++;
+                this.a[0] += weight;
             } else if (base == 'C') {
-                this.a[1]++;
+                this.a[1] += weight;
             } else if (base == 'G') {
-                this.a[2]++;
+                this.a[2] += weight;
             } else if (base == 'T') {
-                this.a[3]++;
+                this.a[3] += weight;
             }
         }
 
@@ -442,15 +592,13 @@ public class MEME {
          * Return a vector scaled wmm-style
          *
          * @param background background frequencies
-         * @param pseudo     pseudocount vector
          * @return WMM-scaled vector
          */
-        public FourTuple wmmScale(FourTuple background, FourTuple pseudo) {
-            FourTuple mod = this.add(pseudo);
+        public FourTuple wmmScale(FourTuple background) {
             FourTuple result = new FourTuple();
             for (int i = 0; i < 4; i++) {
                 // Calculate log2((actual+pseudo)/background) in each cell
-                result.a[i] = Math.log(mod.a[i] / background.a[i]) / Math.log(2);
+                result.a[i] = Math.log(this.a[i] / background.a[i]) / Math.log(2);
             }
             return result;
         }
