@@ -1,7 +1,11 @@
 package hw4;
 
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.*;
+import java.util.List;
 
 public class MEME {
     public static void main(String[] args) throws IOException {
@@ -167,9 +171,112 @@ public class MEME {
         System.out.println("Frequency matrix for B:\n" + B.freqMatrix);
         System.out.println("Frequency matrix for C:\n" + C.freqMatrix);
         System.out.println("Frequency matrix for S:\n" + S.freqMatrix);
+        System.out.println();
 
         // Generate histograms
+        System.out.println("Max c(j) for A: " + generateHistogram(A, "A", DNASequences));
+        System.out.println("Max c(j) for B: " + generateHistogram(B, "B", DNASequences));
+        System.out.println("Max c(j) for C: " + generateHistogram(C, "C", DNASequences));
+        System.out.println("Max c(j) for S: " + generateHistogram(S, "S", DNASequences));
+
         // TODO
+    }
+
+    /**
+     * Creates a histogram of top hits for the given WMM. Also returns the most likely motif starting position.
+     * @param WMMMatrix WMM to use
+     * @param filename filename to save the histogram under (filename.png)
+     * @param seqs sequences to use
+     * @return the most likely motif starting index
+     */
+    public static int generateHistogram(FourMatrix WMMMatrix, String filename, List<String> seqs) {
+        filename = filename + ".png";
+
+        // Generate scores data
+        Map<String, List<Double>> scores = scanWMM(WMMMatrix, seqs);
+        // Initialize histogram data to all 0
+        List<Integer> counts = new ArrayList<>();
+        for (int i = 0; i < scores.get(seqs.get(0)).size(); i++) {
+            counts.add(0);
+        }
+        // Find the maximum score in each
+        for (String seq : scores.keySet()) {
+            List<Double> s = scores.get(seq);
+            int maxIndex = 0;
+            Double max = s.get(0);
+            for (int i = 0; i < s.size(); i++) {
+                if (s.get(i) - max > 0) {
+                    maxIndex = i;
+                    max = s.get(i);
+                }
+            }
+
+            // And increment histogram
+            counts.set(maxIndex, counts.get(maxIndex) + 1);
+        }
+
+        // Find the most likely motif point
+        int maxIndex = 0;
+        Integer max = counts.get(0);
+        for (int i = 0; i < counts.size(); i++) {
+            if (counts.get(i) - max > 0) {
+                maxIndex = i;
+                max = counts.get(i);
+            }
+        }
+
+        // draw image:
+        BufferedImage image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = image.getGraphics();
+        // Draw bars
+        for (int i = 0; i < counts.size(); i++) {
+            // Draw fill
+            g.setColor(Color.CYAN);
+            g.fillRect(scale(0, counts.size(), i, 20, 780),
+                    550 - scale(0, max, counts.get(i), 0, 500),
+                    (780 - 20) / counts.size(),
+                    scale(0, max, counts.get(i), 0, 500));
+            // Draw outline
+            g.setColor(Color.GRAY);
+            g.drawRect(scale(0, counts.size(), i, 20, 780),
+                    550 - scale(0, max, counts.get(i), 0, 500),
+                    (780 - 20) / counts.size(),
+                    scale(0, max, counts.get(i), 0, 500));
+            // Draw label if appropriate
+            if (counts.get(i) > 0) {
+                // Draw position #
+                g.drawString("" + i,
+                        scale(0, counts.size(), i, 20, 780),
+                        565);
+                // Draw # hits
+                g.drawString(counts.get(i) + "",
+                        scale(0, counts.size(), i, 20, 780),
+                        547 - scale(0, max, counts.get(i), 0, 500));
+            }
+        }
+        // Draw bottom axis
+        g.setColor(Color.BLACK);
+        g.drawLine(20, 550, 780, 550);
+        g.drawLine(780, 555, 780, 550);
+        g.drawString("" + counts.size(), 780, 575);
+        for (int i = 0; i < counts.size(); i += 10) {
+            g.drawLine(scale(0, counts.size(), i, 20, 780), 555,
+                    scale(0, counts.size(), i, 20, 780), 550);
+            g.drawString("" + i, scale(0, counts.size(), i, 20, 780), 575);
+        }
+        File outputFile = new File(filename);
+
+        try {
+            ImageIO.write(image, "png", outputFile);
+        } catch (IOException e) {
+            System.err.println("Unable to generate file " + filename);
+        }
+
+        return maxIndex;
+    }
+
+    private static int scale(int vL, int vH, int v, int L, int H) {
+        return Math.round((1f * (v - vL) / (vH - vL)) * (H - L) + L);
     }
 
     /**
