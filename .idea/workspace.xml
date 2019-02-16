@@ -3,16 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="47536c5e-73d3-458a-ada4-52f077e3be4d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/A.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/B.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/C.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/S.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME$FourMatrix.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME$FourTuple.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/hw4/MEME.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hw4/MEME.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/hw4/MEME.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,7 +34,7 @@
     <session id="1008036225">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="11" />
+          <entry key="project.closed" value="13" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="4" />
           <entry key="project.open.time.11" value="1" />
@@ -54,8 +44,9 @@
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.18" value="1" />
           <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.20" value="1" />
           <entry key="project.open.time.24" value="1" />
-          <entry key="project.opened" value="14" />
+          <entry key="project.opened" value="15" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -91,55 +82,7 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="21">
-              <caret line="38" column="49" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4020#4021#0" expanded="true" />
-                <element signature="e#4095#4096#0" expanded="true" />
-                <element signature="e#6308#6309#0" expanded="true" />
-                <element signature="e#6383#6384#0" expanded="true" />
-                <element signature="method#generateHistogram#0;class#MEME#0" />
-                <element signature="e#13648#13649#0" expanded="true" />
-                <element signature="e#13725#13726#0" expanded="true" />
-                <element signature="e#16554#16555#0" expanded="true" />
-                <element signature="e#16630#16631#0" expanded="true" />
-                <element signature="e#17625#17626#0" expanded="true" />
-                <element signature="e#17668#17669#0" expanded="true" />
-                <element signature="e#17984#17985#0" expanded="true" />
-                <element signature="e#18039#18040#0" expanded="true" />
-                <element signature="e#4256#4264#0" expanded="true" />
-                <element signature="method#filterDNASequence#0;class#MEME#0" />
-                <element signature="method#addVector#0;class#CountMatrix#0;class#MEME#0" />
-                <element signature="method#convertToFrequency#0;class#FourMatrix#0;class#MEME#0" />
-                <element signature="e#8819#8820#0" expanded="true" />
-                <element signature="e#8868#8869#0" expanded="true" />
-                <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
-                <element signature="method#FourTuple#1;class#FourTuple#0;class#MEME#0" />
-                <element signature="method#add#0;class#FourTuple#0;class#MEME#0" />
-                <element signature="method#addBase#0;class#FourTuple#0;class#MEME#0" />
-                <element signature="method#frequencyNormalize#0;class#FourTuple#0;class#MEME#0" />
-                <element signature="e#11605#11606#0" expanded="true" />
-                <element signature="e#11711#11712#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/util/Pair.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="45" column="23" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -209,7 +152,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -255,11 +198,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544599491610" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1544600443259" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar!/" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -364,10 +307,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4983108" visible="true" weight="0.1482277" />
-      <window_info id="Structure" order="1" sideWeight="0.5016892" side_tool="true" visible="true" weight="0.1482277" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49586776" visible="true" weight="0.15037593" />
+      <window_info active="true" id="Structure" order="1" sideWeight="0.5041322" side_tool="true" visible="true" weight="0.15037593" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -380,7 +322,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295583" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3295583" />
+      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.3148358" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3295583" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3295583" />
@@ -555,10 +497,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-          <folding>
-            <element signature="e#487#488#0" expanded="true" />
-            <element signature="e#580#581#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -599,13 +537,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/util/Pair.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="45" column="23" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/hw4/MEME.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
@@ -639,6 +570,13 @@
             <element signature="e#11605#11606#0" expanded="true" />
             <element signature="e#11711#11712#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_151/javafx-src.zip!/javafx/util/Pair.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="45" column="23" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
         </state>
       </provider>
     </entry>
