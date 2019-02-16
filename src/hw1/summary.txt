@@ -1,5 +1,4 @@
 Joyce Zhou
-1670289
 
 I did 999 trials for test3 and test4. The p-value I got for test 3 was unusually 
 low given that the compared proteins seem like they should be relatively
