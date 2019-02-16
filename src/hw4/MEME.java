@@ -1,7 +1,6 @@
 package hw4;
 
 // Joyce Zhou
-// 1670289
 
 import javafx.util.Pair;
 
