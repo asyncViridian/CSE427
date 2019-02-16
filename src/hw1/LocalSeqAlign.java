@@ -5,7 +5,7 @@ import general.Pair;
 import java.util.*;
 
 /**
- * @author Joyce Zhou (16570289)
+ * @author Joyce Zhou
  */
 public class LocalSeqAlign {
 
